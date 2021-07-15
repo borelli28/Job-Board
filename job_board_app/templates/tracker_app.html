@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Application Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/tracker_app_style.css' %}">
+  </head>
+  <body>
+
+    <nav>
+      <button class="btn btn-light"><a href="/jobs">Jobs</a></button>
+      <button class="btn btn-light"><a href="/tracker-app">Applications</a></button>
+      <button class="btn btn-danger"><a href="/login">Logout</a></button>
+    </nav>
+
+    <main>
+
+      <h3>Your Applications</h3>
+
+      <table class="table table-striped table-hover" id="apps-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Position</th>
+            <th>Company</th>
+            <th>Job URL</th>
+            <th>Location</th>
+            <th>Date Submitted</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Applied</td>
+            <td>Software Developer</td>
+            <td>Amazon</td>
+            <td><a href="https://developer.adzuna.com/docs/search">Click here</a></td>
+            <td>Texas</td>
+            <td>some day</td>
+            <td>
+              <form>
+                <button>Edit</button>
+                <button>Notes</button>
+              </form>
+            </td>
+          </tr>
+          {% for job in user_jobs %}
+          <tr>
+            <td>{{ job.status }}</td>
+            <td>{{ job.title }}</td>
+            <td>{{ job.company }}</td>
+            <td><a href="{{ job.url }}">Click here</a></td>
+            <td>{{ job.location }}</td>
+            <td>{{ job.submit_date }}</td>
+            <td>
+              <form>
+                <button>Edit</button>
+                <button>Notes</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div id="jobs-viewed">
+        <h6>Jobs Viewed:</h6>
+
+        {% for job in viewed_jobs %}
+        <div id="job-card">
+          <p>{{ job.title }} at {{ job.company }}</p>
+          <p>Location: {{ job.location }}</p>
+        </div>
+        <form>
+          <span>Did you applied?</span>
+          <label for="yes">Yes</label>
+          <input type="checkbox" name="yes" />
+          <label for="no">No</label>
+          <input type="checkbox" name="no" />
+        </form>
+        {% endfor %}
+      </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  </body>
+</html>

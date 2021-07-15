@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from job_board_app.models import *
 import requests
 import sys
 import dotenv
@@ -6,10 +7,12 @@ import os
 
 
 def index(request):
-    print("env variables:")
-    dotenv.read_dotenv()
-    var = os.environ.get("api_app_id")
-    print(var)
+
+    # get user id and save it into session
+    user = User.objects.get(id=1)
+
+    request.session['userid'] = 1
+
     return HttpResponse("hello")
 
 # render jobs page
@@ -74,6 +77,18 @@ def tracker_app(request):
 # get the job details of the job clicked and saved them in the DB
 def set_job(request):
 
+    # get user instance
+    user = User.objects.get(id=request.session['userid'])
+
+        # status = models.CharField(max_length=20)
+        # title = models.CharField(max_length=50)
+        # company = models.CharField(max_length=50)
+        # url = models.CharField(max_length=255)
+        # location = models.CharField(max_length=255)
+        # date_submitted = models.DateField(default=date.today)
+        # user_jobs = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
+
+    # get job info
     _title = request.POST['title']
     _company = request.POST['company']
     _location = request.POST['location']
@@ -82,6 +97,13 @@ def set_job(request):
     request.session['url'] = _url
 
     print("title: " + _title + " company: " + _company + " location: " + _location + " url: " + _url)
+
+
+    # create job instance
+    job= Jobs.objects.create(title=_title, company=_company, url=_url, location=_location, user_jobs=user)
+
+    print("job instance created:")
+    print(job.title)
 
     # return redirect(f'{_url}')
     return redirect('/go_to_job')

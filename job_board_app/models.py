@@ -12,7 +12,7 @@ class User(models.Model):
 
 class Jobs(models.Model):
 
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=20, default="viewed")
     title = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
     url = models.CharField(max_length=255)

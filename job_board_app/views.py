@@ -99,14 +99,6 @@ def set_job(request):
     # get user instance
     user = User.objects.get(id=request.session['userid'])
 
-        # status = models.CharField(max_length=20)
-        # title = models.CharField(max_length=50)
-        # company = models.CharField(max_length=50)
-        # url = models.CharField(max_length=255)
-        # location = models.CharField(max_length=255)
-        # date_submitted = models.DateField(default=date.today)
-        # user_jobs = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
-
     # get job info
     _title = request.POST['title']
     _company = request.POST['company']

@@ -53,7 +53,7 @@
             <td>{{ job.company }}</td>
             <td><a href="{{ job.url }}">Click here</a></td>
             <td>{{ job.location }}</td>
-            <td>{{ job.submit_date }}</td>
+            <td>{{ job.date_submitted }}</td>
             <td>
               <form>
                 <button>Edit</button>
@@ -70,7 +70,7 @@
 
         {% for job in viewed_jobs %}
         <div id="job-card">
-          <p>{{ job.title }} at {{ job.company }}</p>
+          <p>{{ job.title | safe }} at {{ job.company }}</p>
           <p>Location: {{ job.location }}</p>
         </div>
         <form action="/tracker_app/handle_viewed_job/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">

@@ -32,11 +32,13 @@
           <p>Company: {{ job.company }}</p>
           <p>City: {{ job.location }}</p>
           <p>{{ job.description | safe }}</p>
-          <form action="/job_info" method="post" type="post" enctype="multipart/form-data" id="search_job_form">
+          <form action="/set_job" method="post" type="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="hidden" name="what" placeholder="What"/>
-            <input type="hidden" name="where" placeholder="Where"/>
-            <button type="button"><a href="{{ job.url }}">View Job</a></button>
+            <input type="hidden" name="title" value="{{ job.title | safe }}"/>
+            <input type="hidden" name="company" value="{{ job.company }}"/>
+            <input type="hidden" name="location" value="{{ job.location }}"/>
+            <input type="hidden" name="url" value="{{ job.url }}"/>
+            <button type="submit">View Job</button>
           </form>
         </div>
       {% endfor %}

@@ -46,8 +46,8 @@ def search_job(request):
 
     response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what={what}&where={where}&content-type=application/json")
 
-    print("response:")
-    print(response.text)
+    # print("response:")
+    # print(response.text)
     data = response.json()
     results = data["results"]
 
@@ -70,3 +70,15 @@ def search_job(request):
 def tracker_app(request):
 
     return render(request, 'tracker_app.html')
+
+# get the job details of the job clicked and saved them in the DB
+def set_job(request):
+
+    _title = request.POST['title']
+    _company = request.POST['company']
+    _location = request.POST['location']
+    _url = request.POST['url']
+
+    print("title: " + _title + " company: " + _company + " location: " + _location + " url: " + _url)
+
+    return redirect(f'{_url}')

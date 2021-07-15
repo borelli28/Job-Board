@@ -134,3 +134,27 @@ def go_to_job(request):
     context = {"url": url}
 
     return render(request, 'go_to_job.html', context)
+
+# handles viewed jobs form data(add to applied or delete)
+def viewed_jobs_handler(request, id):
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+    print("job instance:")
+    print(job.title)
+
+    # user applied to the job so change job status to applied
+    if 'yes' in request.POST["applied?"]:
+        job.status = "applied"
+        job.save()
+        print("user clicked yes so status was updated:")
+        print(job.status)
+
+    # user did not applied to the job so delete it
+    if 'no' in request.POST["applied?"]:
+        job.delete()
+        print("job deleted")
+
+
+    return redirect('/tracker_app')

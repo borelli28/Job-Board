@@ -71,8 +71,27 @@ def search_job(request):
 
 # renders the tracker app page
 def tracker_app(request):
+    # get user instance
+    user = User.objects.get(id=request.session['userid'])
 
-    return render(request, 'tracker_app.html')
+    # get jobs viewed
+    jobs = Jobs.objects.filter(user_jobs=user)
+    print(type(jobs))
+
+    viewed_jobs = []
+
+    for job in jobs:
+        if job.status == "viewed":
+            # append to viewed jobs
+            viewed_jobs.append(job)
+
+    # Only show jobs in the table that user apply to.
+    jobs = Jobs.objects.exclude(status="viewed")
+
+    context = {"user_jobs":jobs, "viewed_jobs": viewed_jobs}
+
+
+    return render(request, 'tracker_app.html', context)
 
 # get the job details of the job clicked and saved them in the DB
 def set_job(request):

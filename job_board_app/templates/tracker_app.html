@@ -51,12 +51,16 @@
             <td>{{ job.status }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.company }}</td>
-            <td><a href="{{ job.url }}">Click here</a></td>
+            <td><a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">Go to Job Post</a></td>
             <td>{{ job.location }}</td>
             <td>{{ job.date_submitted }}</td>
             <td>
-              <form>
+              <form action="/tracker_app/edit_job/{{ job.id }}" enctype="multipart/form-data">
+                {% csrf_token %}
                 <button>Edit</button>
+              </form>
+              <form action="/tracker_app/notes/{{ job.id }}">
+                {% csrf_token %}
                 <button>Notes</button>
               </form>
             </td>

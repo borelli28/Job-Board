@@ -150,3 +150,48 @@ def viewed_jobs_handler(request, id):
 
 
     return redirect('/tracker_app')
+
+# renders edit job form
+def edit_job(request, id):
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+    context = {"job": job}
+
+    return render(request, 'edit_job.html', context)
+
+# handles job put data from form
+def update_job(request, id):
+
+    # get logged user
+    user = User.objects.get(id=request.session['userid'])
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+
+    # check that the job we are editing belongs to the logged user
+    if job.user_jobs == user:
+
+        _status = request.POST['status']
+        _title = request.POST['title']
+        _company = request.POST['company']
+        _location = request.POST['location']
+
+        # if 'date_submitted' in request.POST:
+        #     _date_submitted = request.POST['date_submitted']
+        #     job.date_submitted = _date_submitted
+        #     job.save()
+
+        job.status = _status
+        job.title = _title
+        job.company = _company
+        job.save()
+
+        print("Job was updated")
+        return redirect('/tracker_app')
+
+    else:
+        print("User don't have permission to edit this Job object")
+        return redirect('/tracker_app')

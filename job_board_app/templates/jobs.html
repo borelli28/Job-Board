@@ -11,7 +11,7 @@
 
     <nav>
       <button class="btn btn-light"><a href="/jobs">Jobs</a></button>
-      <button class="btn btn-light"><a href="/account">Applications</a></button>
+      <button class="btn btn-light"><a href="/tracker-app">Applications</a></button>
       <button class="btn btn-danger"><a href="/login">Logout</a></button>
     </nav>
 
@@ -32,7 +32,12 @@
           <p>Company: {{ job.company }}</p>
           <p>City: {{ job.location }}</p>
           <p>{{ job.description | safe }}</p>
-          <button type="button"><a href="{{ job.url }}">View Job</a></button>
+          <form action="/job_info" method="post" type="post" enctype="multipart/form-data" id="search_job_form">
+            {% csrf_token %}
+            <input type="hidden" name="what" placeholder="What"/>
+            <input type="hidden" name="where" placeholder="Where"/>
+            <button type="button"><a href="{{ job.url }}">View Job</a></button>
+          </form>
         </div>
       {% endfor %}
       </div>

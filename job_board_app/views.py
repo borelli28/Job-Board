@@ -65,3 +65,8 @@ def search_job(request):
 
 
     return render(request, 'jobs.html', { "jobs": jobs })
+
+# renders the tracker app page
+def tracker_app(request):
+
+    return render(request, 'tracker_app.html')

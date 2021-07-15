@@ -1,0 +1,31 @@
+/* * {
+  outline: 1px dashed red;
+} */
+
+body {
+
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+main #search_job_form {
+  display: flex;
+  justify-content: center;
+  margin: 2% 1%;
+}
+
+main #jobs {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+main #job-card {
+  text-align: center;
+  width: 30%;
+  /* margin: 2% 2%; */
+  border: 1px solid black;
+}

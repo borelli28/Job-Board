@@ -79,6 +79,17 @@ def set_job(request):
     _location = request.POST['location']
     _url = request.POST['url']
 
+    request.session['url'] = _url
+
     print("title: " + _title + " company: " + _company + " location: " + _location + " url: " + _url)
 
-    return redirect(f'{_url}')
+    # return redirect(f'{_url}')
+    return redirect('/go_to_job')
+
+def go_to_job(request):
+
+    url = request.session['url']
+
+    context = {"url": url}
+
+    return render(request, 'go_to_job.html', context)

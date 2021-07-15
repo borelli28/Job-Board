@@ -20,18 +20,35 @@ def jobs(request):
 def search_job(request):
     print("inside search_job")
 
+    what = ""
+    where = ""
+
+    if "what" in request.POST:
+        what = request.POST["what"]
+    else:
+        print("['what'] empty")
+
+    if "where" in request.POST:
+        where = request.POST["where"]
+    else:
+        print("['where'] empty")
+
+    print("what:" + what)
+    print("where: " + where)
+
     dotenv.read_dotenv()
     the_id = os.environ.get('api_app_id')
     the_key = os.environ.get('api_key')
 
     # response = requests.get("http://lookup-service-prod.mlb.com/json/named.search_player_all.bam/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2021'&player_id='545361'")
     # response = requests.get(f"http://api.adzuna.com/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=1&what=javascript%20developer&content-type=application/json")
-    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what=javascript%20developer&what_exclude=java&where=nc&content-type=application/json")
+    # response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what=javascript%20developer&what_exclude=java&where=nc&content-type=application/json")
+
+    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what={what}&where={where}&content-type=application/json")
+
     print("response:")
     print(response.text)
-    print("data:")
     data = response.json()
-    print(data)
     results = data["results"]
 
     # get each job data

@@ -1,0 +1,29 @@
+/* * {
+  outline: 1px dashed red;
+} */
+
+body nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+body #title {
+  display: flex;
+  justify-content: center;
+  margin: 2%;
+}
+
+body form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2%;
+}
+
+body form textarea {
+  width: 80%;
+}
+
+body form button {
+  width: 21%;
+}

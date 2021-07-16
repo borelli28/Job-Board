@@ -19,6 +19,7 @@ def index(request):
 
 # render jobs page
 def jobs(request):
+
     return render(request, 'jobs.html')
 
 # makes API call for jobs and then re render the page with the response from the API
@@ -115,7 +116,6 @@ def tracker_app(request):
 
     context = {"user_jobs":table_page, "viewed_jobs": page}
 
-
     return render(request, 'tracker_app.html', context)
 
 # get the job details of the job clicked and saved them in the DB
@@ -141,7 +141,6 @@ def set_job(request):
     print("job instance created:")
     print(job.title)
 
-    # return redirect(f'{_url}')
     return redirect('/go_to_job')
 
 def go_to_job(request):

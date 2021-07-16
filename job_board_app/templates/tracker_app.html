@@ -91,10 +91,10 @@
 
         <div id="paginator">
         {% if viewed_jobs.has_previous %}
-          <a href="{% url 'index' %}?page={{ viewed_jobs.previous_page_number }}">Previous Page</a>
+          <a href="{% url 'tracker_app' %}?page={{ viewed_jobs.previous_page_number }}">Previous Page</a>
         {% endif %}
         {% if viewed_jobs.has_next %}
-          <a href="{% url 'index' %}?page={{ viewed_jobs.next_page_number }}">Next Page</a>
+          <a href="{% url 'tracker_app' %}?page={{ viewed_jobs.next_page_number }}">Next Page</a>
         {% endif %}
         </div>
 

@@ -2,13 +2,13 @@
   outline: 1px dashed red;
 } */
 
-body {
-
-}
-
 nav {
   display: flex;
   justify-content: space-around;
+}
+
+main #no-jobs-alert {
+  margin: 2%;
 }
 
 main #search_job_form {

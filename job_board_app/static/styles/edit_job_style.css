@@ -1,0 +1,39 @@
+/* * {
+  outline: 1px dashed red;
+} */
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  margin: 2% 1%;
+}
+
+main h1 {
+  width: 100%;
+}
+
+main form {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+main form div {
+  width: 100%;
+}
+
+main form div label {
+  width: 30%;
+}
+
+main form div input, select {
+  width: 50%;
+}

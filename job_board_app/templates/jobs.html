@@ -17,13 +17,19 @@
 
     <main>
 
+      <!-- {% if jobs|length == 0 %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" id="no-jobs-alert">
+        <strong>No Jobs Found!</strong> Please check your search input.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %} -->
+
       <form action="/search_job" method="post" type="post" enctype="multipart/form-data" id="search_job_form">
         {% csrf_token %}
         <input type="text" name="what" placeholder="What"/>
         <input type="text" name="where" placeholder="Where"/>
         <button class="btn btn-primary" type="submit">Find Jobs</button>
       </form>
-
 
       <div id="jobs">
       {% for job in jobs %}

@@ -29,3 +29,9 @@ main #job-card {
   /* margin: 2% 2%; */
   border: 1px solid black;
 }
+
+main #paginator {
+  width: 100%;
+  text-align: center;
+  margin: 5% 1%;
+}

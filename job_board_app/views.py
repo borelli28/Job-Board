@@ -5,6 +5,7 @@ import sys
 import dotenv
 import os
 from django.utils.html import strip_tags
+from django.core.paginator import Paginator, EmptyPage
 
 
 def index(request):
@@ -20,19 +21,19 @@ def index(request):
 def jobs(request):
     return render(request, 'jobs.html')
 
-# makes API call to indeed.com for jobs and then re render the page with the response from the API
+# makes API call for jobs and then re render the page with the response from the API
 def search_job(request):
     print("inside search_job")
 
     what = ""
     where = ""
 
-    if "what" in request.POST:
+    if 'what' in request.POST:
         what = request.POST["what"]
     else:
         print("['what'] empty")
 
-    if "where" in request.POST:
+    if 'where' in request.POST:
         where = request.POST["where"]
     else:
         print("['where'] empty")
@@ -44,14 +45,11 @@ def search_job(request):
     the_id = os.environ.get('api_app_id')
     the_key = os.environ.get('api_key')
 
-    # response = requests.get("http://lookup-service-prod.mlb.com/json/named.search_player_all.bam/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2021'&player_id='545361'")
     # response = requests.get(f"http://api.adzuna.com/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=1&what=javascript%20developer&content-type=application/json")
     # response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what=javascript%20developer&what_exclude=java&where=nc&content-type=application/json")
 
-    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what={what}&where={where}&content-type=application/json")
+    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&what={what}&where={where}&content-type=application/json")
 
-    # print("response:")
-    # print(response.text)
     data = response.json()
     results = data["results"]
 
@@ -67,8 +65,18 @@ def search_job(request):
         temp_obj["description"] = job["description"]
         jobs.append(temp_obj)
 
+    p = Paginator(jobs, 6)
 
-    return render(request, 'jobs.html', { "jobs": jobs })
+    page_num = request.GET.get("page", 1)
+
+    # this try block make sure if the user access a page that has not results then he will be redirect to page 1 instead of a server error
+    try:
+        page = p.page(page_num)
+    except EmptyPage:
+        page = p.page(1)
+
+
+    return render(request, 'jobs.html', { "jobs": page })
 
 # renders the tracker app page
 def tracker_app(request):
@@ -180,11 +188,6 @@ def update_job(request, id):
         _title = request.POST['title']
         _company = request.POST['company']
         _location = request.POST['location']
-
-        # if 'date_submitted' in request.POST:
-        #     _date_submitted = request.POST['date_submitted']
-        #     job.date_submitted = _date_submitted
-        #     job.save()
 
         job.status = _status
         job.title = _title

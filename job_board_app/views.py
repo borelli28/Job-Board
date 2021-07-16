@@ -4,6 +4,7 @@ import requests
 import sys
 import dotenv
 import os
+from django.utils.html import strip_tags
 
 
 def index(request):
@@ -139,6 +140,7 @@ def viewed_jobs_handler(request, id):
     # user applied to the job so change job status to applied
     if 'yes' in request.POST["applied?"]:
         job.status = "Applied"
+        job.title = strip_tags(job.title)
         job.save()
         print("user clicked yes so status was updated:")
         print(job.status)

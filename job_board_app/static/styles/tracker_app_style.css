@@ -1,3 +1,6 @@
+/* * {
+  outline: 1px dashed red;
+} */
 
 nav {
   display: flex;
@@ -6,4 +9,25 @@ nav {
 
 main {
   text-align: center;
+}
+
+main #jobs-viewed {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+main #jobs-viewed h6 {
+  width: 100%;
+}
+
+main #jobs-viewed #job-card {
+  width: 30%;
+  margin: 1%;
+}
+
+main #jobs-viewed #paginator {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

@@ -65,16 +65,14 @@ def search_job(request):
         temp_obj["description"] = job["description"]
         jobs.append(temp_obj)
 
+    # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
     p = Paginator(jobs, 6)
-
     page_num = request.GET.get("page", 1)
-
     # this try block make sure if the user access a page that has not results then he will be redirect to page 1 instead of a server error
     try:
         page = p.page(page_num)
     except EmptyPage:
         page = p.page(1)
-
 
     return render(request, 'jobs.html', { "jobs": page })
 
@@ -97,7 +95,16 @@ def tracker_app(request):
     # Only show jobs in the table that user apply to.
     jobs = Jobs.objects.exclude(status="viewed")
 
-    context = {"user_jobs":jobs, "viewed_jobs": viewed_jobs}
+    # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
+    p = Paginator(viewed_jobs, 3)
+    page_num = request.GET.get("page", 1)
+    # this try block make sure if the user access a page that has not results then he will be redirect to page 1 instead of a server error
+    try:
+        page = p.page(page_num)
+    except EmptyPage:
+        page = p.page(1)
+
+    context = {"user_jobs":jobs, "viewed_jobs": page}
 
 
     return render(request, 'tracker_app.html', context)

@@ -75,17 +75,27 @@
         <div id="job-card">
           <p>{{ job.title | safe }} at {{ job.company }}</p>
           <p>Location: {{ job.location }}</p>
+          <form action="/tracker_app/handle_viewed_job/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <span>Did you applied?</span>
+            <label for="applied?">Yes</label>
+            <input type="radio" name="applied?" value="yes"/>
+            <label for="applied?">No</label>
+            <input type="radio" name="applied?" value="no"/>
+            <button type="submit">Submit</button>
+          </form>
         </div>
-        <form action="/tracker_app/handle_viewed_job/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <span>Did you applied?</span>
-          <label for="applied?">Yes</label>
-          <input type="radio" name="applied?" value="yes"/>
-          <label for="applied?">No</label>
-          <input type="radio" name="applied?" value="no"/>
-          <button type="submit">Submit</button>
-        </form>
         {% endfor %}
+
+        <div id="paginator">
+        {% if viewed_jobs.has_previous %}
+          <a href="{% url 'index' %}?page={{ viewed_jobs.previous_page_number }}">Previous Page</a>
+        {% endif %}
+        {% if viewed_jobs.has_next %}
+          <a href="{% url 'index' %}?page={{ viewed_jobs.next_page_number }}">Next Page</a>
+        {% endif %}
+        </div>
+
       </div>
 
     </main>

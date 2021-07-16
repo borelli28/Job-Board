@@ -19,5 +19,6 @@ class Jobs(models.Model):
     location = models.CharField(max_length=255)
     date_submitted = models.DateField(default=date.today)
     user_jobs = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
+    note = models.TextField(default="Enter text here")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

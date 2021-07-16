@@ -237,3 +237,41 @@ def delete_job(request, id):
     else:
         print("User don't have permission to delete this Job object")
         return redirect('/tracker_app')
+
+# renders note page
+def job_note(request, id):
+    # get logged user
+    user = User.objects.get(id=request.session['userid'])
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+    # check that logged user is the owner of this job instance
+    if job.user_jobs == user:
+        note = job.note
+        context = { "note": note, "job": job }
+        return render(request, 'note.html', context)
+
+    else:
+        print("User don't have permission to access these resources")
+        return redirect('/tracker_app')
+
+# update job note
+def update_note(request, id):
+    # get logged user
+    user = User.objects.get(id=request.session['userid'])
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+    # check that logged user is the owner of this job instance
+    if job.user_jobs == user:
+        note = request.POST['note']
+        job.note = note
+        job.save()
+        print("Note updated")
+        return redirect('/tracker_app')
+
+    else:
+        print("User don't have permission to access these resources")
+        return redirect('/tracker_app')

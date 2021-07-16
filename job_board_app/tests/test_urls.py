@@ -34,3 +34,23 @@ class TestUrls(SimpleTestCase):
     def test_viewed_job_handler_url(self):
         url = reverse("viewed_job_handler", args=["1"])
         self.assertEquals(resolve(url).func, viewed_jobs_handler)
+
+    def test_edit_job_form_url(self):
+        url = reverse("edit_job_form", args=["1"])
+        self.assertEquals(resolve(url).func, edit_job)
+
+    def test_update_job_logic_url(self):
+        url = reverse("update_job_logic", args=["1"])
+        self.assertEquals(resolve(url).func, update_job)
+
+    def test_delete_job_url(self):
+        url = reverse("delete_job", args=["1"])
+        self.assertEquals(resolve(url).func, delete_job)
+
+    def test_render_job_note_url(self):
+        url = reverse("render_job_note", args=["1"])
+        self.assertEquals(resolve(url).func, job_note)
+
+    def test_update_job_note_url(self):
+        url = reverse("update_job_note", args=["1"])
+        self.assertEquals(resolve(url).func, update_note)

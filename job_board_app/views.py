@@ -161,18 +161,23 @@ def viewed_jobs_handler(request, id):
     print("job instance:")
     print(job.title)
 
-    # user applied to the job so change job status to applied
-    if 'yes' in request.POST["applied?"]:
-        job.status = "Applied"
-        job.title = strip_tags(job.title)
-        job.save()
-        print("user clicked yes so status was updated:")
-        print(job.status)
+    try:
+        # user applied to the job so change job status to applied
+        if 'yes' in request.POST["applied?"]:
+            job.status = "Applied"
+            job.title = strip_tags(job.title)
+            job.save()
+            print("user clicked yes so status was updated:")
+            print(job.status)
 
-    # user did not applied to the job so delete it
-    if 'no' in request.POST["applied?"]:
-        job.delete()
-        print("job deleted")
+        # user did not applied to the job so delete it
+        if 'no' in request.POST["applied?"]:
+            job.delete()
+            print("job deleted")
+    except:
+        print("Error ocurred while getting the post response. Probably user submit empty form")
+        return redirect('/tracker_app')
+
 
 
     return redirect('/tracker_app')

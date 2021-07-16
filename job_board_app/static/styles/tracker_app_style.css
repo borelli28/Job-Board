@@ -33,5 +33,5 @@ main #jobs-viewed #paginator {
 }
 
 main #jobs-viewed #paginator a {
-  margin: 0 2%;
+  margin: 0 2% 1% 2%;
 }

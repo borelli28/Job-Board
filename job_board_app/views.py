@@ -138,7 +138,7 @@ def viewed_jobs_handler(request, id):
 
     # user applied to the job so change job status to applied
     if 'yes' in request.POST["applied?"]:
-        job.status = "applied"
+        job.status = "Applied"
         job.save()
         print("user clicked yes so status was updated:")
         print(job.status)

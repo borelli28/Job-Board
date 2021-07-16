@@ -32,24 +32,21 @@
           </tr>
         </thead>
         <tbody>
+          {% if user_jobs|length < 1 %}
           <tr>
-            <td>Applied</td>
-            <td>Software Developer</td>
-            <td>Amazon</td>
-            <td><a href="https://developer.adzuna.com/docs/search">Click here</a></td>
-            <td>Texas</td>
-            <td>some day</td>
-            <td>
-              <form>
-                <button>Edit</button>
-                <button>Notes</button>
-              </form>
-            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
+          {% endif %}
           {% for job in user_jobs %}
           <tr>
             <td>{{ job.status }}</td>
-            <td>{{ job.title }}</td>
+            <td>{{ job.title | safe }}</td>
             <td>{{ job.company }}</td>
             <td><a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">Go to Job Post</a></td>
             <td>{{ job.location }}</td>
@@ -70,7 +67,9 @@
       </table>
 
       <div id="jobs-viewed">
-        <h6>Jobs Viewed:</h6>
+        {% if viewed_jobs|length > 0 %}
+          <h6>Jobs Viewed:</h6>
+        {% endif %}
 
         {% for job in viewed_jobs %}
         <div id="job-card">

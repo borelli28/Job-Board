@@ -10,7 +10,7 @@
   <body>
 
     <nav>
-      <button class="btn btn-light"><a href="/jobs">Jobs</a></button>
+      <button class="btn btn-light"><a href="/jobs">Job Search</a></button>
       <button class="btn btn-light"><a href="/tracker_app">Applications</a></button>
       <button class="btn btn-danger"><a href="/login">Logout</a></button>
     </nav>
@@ -63,8 +63,10 @@
             </td>
           </tr>
           {% endfor %}
+          </div>
         </tbody>
       </table>
+      <div id="paginator">
 
       <div id="jobs-viewed">
         {% if viewed_jobs|length > 0 %}

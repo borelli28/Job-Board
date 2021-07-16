@@ -31,3 +31,7 @@ main #jobs-viewed #paginator {
   justify-content: center;
   width: 100%;
 }
+
+main #jobs-viewed #paginator a {
+  margin: 0 2%;
+}

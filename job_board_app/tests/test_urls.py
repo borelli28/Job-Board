@@ -23,6 +23,14 @@ class TestUrls(SimpleTestCase):
         url = reverse("render_tracker_app")
         self.assertEquals(resolve(url).func, tracker_app)
 
-    def test_render_tracker_app_url(self):
-        url = reverse("render_tracker_app")
-        self.assertEquals(resolve(url).func, tracker_app)
+    def test_save_job_info_url(self):
+        url = reverse("save_job_info")
+        self.assertEquals(resolve(url).func, set_job)
+
+    def test_go_to_job_url(self):
+        url = reverse("go_to_job")
+        self.assertEquals(resolve(url).func, go_to_job)
+
+    def test_viewed_job_handler_url(self):
+        url = reverse("viewed_job_handler", args=["1"])
+        self.assertEquals(resolve(url).func, viewed_jobs_handler)

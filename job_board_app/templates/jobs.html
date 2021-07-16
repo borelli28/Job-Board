@@ -52,10 +52,10 @@
 
       <div id="paginator">
       {% if jobs.has_previous %}
-        <a href="{% url 'job_page' %}?page={{ jobs.previous_page_number }}">Previous Page</a>
+        <a href="{% url 'job_search_logic' %}?page={{ jobs.previous_page_number }}">Previous Page</a>
       {% endif %}
       {% if jobs.has_next %}
-        <a href="{% url 'job_page' %}?page={{ jobs.next_page_number }}">Next Page</a>
+        <a href="{% url 'job_search_logic' %}?page={{ jobs.next_page_number }}">Next Page</a>
       {% endif %}
       </div>
 

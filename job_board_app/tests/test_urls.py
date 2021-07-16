@@ -14,3 +14,15 @@ class TestUrls(SimpleTestCase):
     def test_render_jobs_url(self):
         url = reverse("render_jobs")
         self.assertEquals(resolve(url).func, jobs)
+
+    def test_job_search_logic_url(self):
+        url = reverse("job_search_logic")
+        self.assertEquals(resolve(url).func, search_job)
+
+    def test_render_tracker_app_url(self):
+        url = reverse("render_tracker_app")
+        self.assertEquals(resolve(url).func, tracker_app)
+
+    def test_render_tracker_app_url(self):
+        url = reverse("render_tracker_app")
+        self.assertEquals(resolve(url).func, tracker_app)

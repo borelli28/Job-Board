@@ -195,3 +195,19 @@ def update_job(request, id):
     else:
         print("User don't have permission to edit this Job object")
         return redirect('/tracker_app')
+
+def delete_job(request, id):
+    # get logged user
+    user = User.objects.get(id=request.session['userid'])
+
+    # get job instance
+    job = Jobs.objects.get(id=id)
+
+    # check that the job we are deleting belongs to the logged user
+    if job.user_jobs == user:
+        job.delete()
+        print("job deleted")
+        return redirect('/tracker_app')
+    else:
+        print("User don't have permission to delete this Job object")
+        return redirect('/tracker_app')

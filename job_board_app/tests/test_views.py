@@ -22,6 +22,7 @@ class TestViews(TestCase):
         self.search_job_url = reverse("job_search_logic")
         self.tracker_app_url = reverse("render_tracker_app")
         self.set_job_url = reverse("save_job_info")
+        self.go_to_job_url = reverse("go_to_job")
 
     def test_index_view_get(self):
         response = self.client.get(self.index_url)
@@ -60,3 +61,12 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 302) # redirect() returns a 302 code instead of a 200
         job = Jobs.objects.last()
         self.assertEquals(job.location, "Dallas, TX") # checks that the object posted is being saved
+
+    def test_go_to_job_view_get(self):
+        session = self.client.session
+        session['url'] = "https://www.youtube.com/watch?v=hA_VxnxCHbo&list=PLbpAWbHbi5rMF2j5n6imm0enrSD9eQUaM&index=3"
+        session.save()
+
+        response = self.client.get(self.go_to_job_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'go_to_job.html')

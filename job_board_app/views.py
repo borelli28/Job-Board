@@ -46,9 +46,6 @@ def search_job(request):
     the_id = os.environ.get('api_app_id')
     the_key = os.environ.get('api_key')
 
-    # response = requests.get(f"http://api.adzuna.com/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=1&what=javascript%20developer&content-type=application/json")
-    # response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=5&what=javascript%20developer&what_exclude=java&where=nc&content-type=application/json")
-
     response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&what={what}&where={where}&content-type=application/json")
 
     data = response.json()
@@ -84,7 +81,6 @@ def tracker_app(request):
 
     # get jobs viewed
     jobs = Jobs.objects.filter(user_jobs=user)
-    print(type(jobs))
 
     viewed_jobs = []
 

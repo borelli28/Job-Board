@@ -20,6 +20,7 @@ class TestViews(TestCase):
         self.index_url = reverse("index")
         self.jobs_url = reverse("render_jobs")
         self.search_job_url = reverse("job_search_logic")
+        self.tracker_app_url = reverse("render_tracker_app")
 
     def test_index_view_get(self):
         response = self.client.get(self.index_url)
@@ -34,3 +35,12 @@ class TestViews(TestCase):
         response = self.client.get(self.search_job_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'jobs.html')
+
+    def test_tracker_app_view_get(self):
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
+        response = self.client.get(self.tracker_app_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tracker_app.html')

@@ -34,6 +34,7 @@ class TestViews(TestCase):
         self.edit_job_url = reverse("edit_job_form", args=[job.id])
         self.update_job_url = reverse("update_job_logic", args=[job.id])
         self.delete_job_url = reverse("delete_job", args=[job.id])
+        self.job_note_url = reverse("render_job_note", args=[job.id])
 
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
@@ -158,3 +159,21 @@ class TestViews(TestCase):
         # make sure that the job was deleted
         job = Jobs.objects.last()
         self.assertIsNone(job, "Job was not deleted")
+
+    def test_job_note_view(self):
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
+        # validate the method used to check that user has the authorization to view the job note
+        self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
+
+        response = self.client.get(self.job_note_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'note.html')
+
+        # check that the job in context is the same job selected by the user
+        self.assertTrue(response.context["job"] == self.job, "Job passed as parameter is not the same one in context")
+
+        # check that the note in context is the same note of the job instance passed
+        self.assertTrue(response.context["note"] == self.job.note, "Note in context is not the same one from the job passed")

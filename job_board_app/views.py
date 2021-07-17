@@ -238,6 +238,7 @@ def job_note(request, id):
     # get job instance
     job = Jobs.objects.get(id=id)
 
+    # NOTE: if the if statement argument is edited makes sure to edit the test case for this method too. Line: 169 in test_views.py
     # check that logged user is the owner of this job instance
     if job.user_jobs == user:
         note = job.note

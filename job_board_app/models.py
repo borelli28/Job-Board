@@ -1,7 +1,25 @@
 from django.db import models
 from datetime import date, datetime
 
-# Create your models here.
+class ValidatorManager(models.Manager):
+
+    def user_register_val(self, postData):
+        errors = {}
+
+        if len(postData['email']) < 3:
+            errors["email"] = "Email should be at least 3 characters long"
+
+        if len(postData['password']) < 8:
+            errors["password"] = "Password should be at least 8 characters"
+
+        if postData['password'] != postData['confirm_password']:
+            errors["password"] = "Passwords do not match"
+
+        # Check if email already exist in database
+        if User.objects.filter(email=postData['email']):
+            errors["email"] = "Email already exist. Please enter a different email or Log in into your account."
+
+        return errors
 
 class User(models.Model):
 
@@ -9,6 +27,7 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = ValidatorManager()
 
 class Jobs(models.Model):
 

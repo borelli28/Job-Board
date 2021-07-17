@@ -40,18 +40,18 @@ class TestViews(TestCase):
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
         response = self.client.get(self.index_url)
-        self.assertEquals(response.status_code, 200)    # checks that page is rendering
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")    # checks that page is rendering
         self.assertEquals(response.content, b"hello", "index() method did not return 'hello' response")
 
     def test_jobs_view(self):
         response = self.client.get(self.jobs_url)
-        self.assertEquals(response.status_code, 200) # test that method returns an OK server response(page renders!)
-        self.assertTemplateUsed(response, 'jobs.html')  # test that method renders the right template
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code") # test that method returns an OK server response(page renders!)
+        self.assertTemplateUsed(response, 'jobs.html', "Method render the wrong template")  # test that method renders the right template
 
     def test_search_job_view(self):
         response = self.client.get(self.search_job_url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'jobs.html')
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'jobs.html', "Method render the wrong template")
 
     def test_tracker_app_view(self):
         session = self.client.session
@@ -59,8 +59,8 @@ class TestViews(TestCase):
         session.save()
 
         response = self.client.get(self.tracker_app_url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tracker_app.html')
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'tracker_app.html', "Method render the wrong template")
 
     def test_set_job_view(self):
         session = self.client.session
@@ -73,7 +73,7 @@ class TestViews(TestCase):
             "location": "Dallas, TX",
             "url": "https://www.youtube.com/watch?v=hA_VxnxCHbo&list=PLbpAWbHbi5rMF2j5n6imm0enrSD9eQUaM&index=3"
         })
-        self.assertEquals(response.status_code, 302) # redirect() returns a 302 code instead of a 200
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code") # redirect() returns a 302 code instead of a 200
         job = Jobs.objects.last()
         self.assertEquals(job.location, "Dallas, TX") # checks that the object posted is being saved
 
@@ -83,8 +83,8 @@ class TestViews(TestCase):
         session.save()
 
         response = self.client.get(self.go_to_job_url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'go_to_job.html')
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'go_to_job.html', "Method render the wrong template")
 
     def test_viewed_jobs_handler_view(self):
         session = self.client.session
@@ -93,7 +93,7 @@ class TestViews(TestCase):
 
         # check that view redirect to another URL
         response = self.client.get(self.viewed_jobs_handler_url)
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 302, "Method did not redirect, it's supposed to return a 302 code")
 
         # check that when post is "yes" the job status is changed to Applied
         response = self.client.post(self.viewed_jobs_handler_url, {
@@ -113,8 +113,8 @@ class TestViews(TestCase):
     def test_edit_job_view(self):
 
         response = self.client.get(self.edit_job_url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit_job.html')
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'edit_job.html', "Method render the wrong template")
 
         # check that job passed(as an id) is the one returned in context
         self.assertEquals(response.context["job"], self.job)
@@ -131,7 +131,7 @@ class TestViews(TestCase):
             "company": "New company name",
             "location": "Middle of nowhere"
         })
-        self.assertEquals(response.status_code, 302)   # checks that the method redirects succesfully
+        self.assertEquals(response.status_code, 302, "Method did not redirect, it's supposed to return a 302 code")   # checks that the method redirects succesfully
 
         job = Jobs.objects.last()
 
@@ -155,7 +155,7 @@ class TestViews(TestCase):
         self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
 
         response = self.client.delete(self.delete_job_url)
-        self.assertEquals(response.status_code, 302)   # checks that the method redirects succesfully
+        self.assertEquals(response.status_code, 302, "Method did not redirect, it's supposed to return a 302 code")   # checks that the method redirects succesfully
 
         # make sure that the job was deleted
         job = Jobs.objects.last()
@@ -170,8 +170,8 @@ class TestViews(TestCase):
         self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
 
         response = self.client.get(self.job_note_url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'note.html')
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'note.html', "Method render the wrong template")
 
         # check that the job in context is the same job selected by the user
         self.assertTrue(response.context["job"] == self.job, "Job passed as parameter is not the same one in context")
@@ -191,7 +191,7 @@ class TestViews(TestCase):
         response = self.client.post(self.update_note_url, {
             "note": "Some text here about the application that we want to save in notes"
         })
-        self.assertEquals(response.status_code, 302, "Redirect was unsuccesfull for some reason")   # checks that the method redirects succesfully
+        self.assertEquals(response.status_code, 302, "Method did not redirect, it's supposed to return a 302 code")   # checks that the method redirects succesfully
 
         job = Jobs.objects.last()
         self.assertEquals(job.note, "Some text here about the application that we want to save in notes", "Job note was not updated")

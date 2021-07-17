@@ -34,10 +34,3 @@ class TestViews(TestCase):
         response = self.client.get(self.search_job_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'jobs.html')
-
-        # test API by checking server response to POST is OK
-        response_post = self.client.post(self.search_job_url, {
-            "what": "Software Dev",
-            "where": "Austin"
-        })
-        self.assertEquals(response.status_code, 200)

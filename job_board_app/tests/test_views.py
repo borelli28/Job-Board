@@ -12,6 +12,10 @@ class TestViews(TestCase):
         User.objects.create(email="test@test", password="123")
         user = User.objects.get(id=1)
 
+        session = self.client.session
+        session['userid'] = user.id
+        session.save()
+
         # create a job instance for testing purposes
         job = Jobs.objects.create(status="Applied", title="Software Dev", company="Cheap Labor Inc.", url="https://borelliarmando.com/", location="Austin, TX", user_jobs=user)
         self.job = job
@@ -26,14 +30,16 @@ class TestViews(TestCase):
         self.go_to_job_url = reverse("go_to_job")
         self.viewed_jobs_handler_url = reverse("viewed_job_handler", args=[job.id])
         self.edit_job_url = reverse("edit_job_form", args=[job.id])
+        self.update_job_url = reverse("update_job_logic", args=[job.id])
 
     def test_index_view(self):
         response = self.client.get(self.index_url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)    # checks that page is rendering
+        self.assertEquals(response.content, b"hello", "index() method did not return 'hello' response")
 
     def test_jobs_view(self):
         response = self.client.get(self.jobs_url)
-        self.assertEquals(response.status_code, 200) # test that method returns an OK server response
+        self.assertEquals(response.status_code, 200) # test that method returns an OK server response(page renders!)
         self.assertTemplateUsed(response, 'jobs.html')  # test that method renders the right template
 
     def test_search_job_view(self):
@@ -97,11 +103,37 @@ class TestViews(TestCase):
         job = Jobs.objects.last()
         self.assertIsNone(job, "viewed_jobs_handler did not delete the job when POST is 'no' ")
 
-    # render the edit_job_page
+    # render the edit_job_page          update_job_url
     def test_edit_job_view(self):
 
         response = self.client.get(self.edit_job_url)
         self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'edit_job.html')
 
         # check that job passed(as an id) is the one returned in context
         self.assertEquals(response.context["job"], self.job)
+
+    # check that all job attributes were updated and also that only the user that created the instance can edit the instance
+    def test_update_job_url_view(self):
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
+        response = self.client.post(self.update_job_url, {
+            "status": "Interviewing",
+            "title": "New job title",
+            "company": "New company name",
+            "location": "Middle of nowhere"
+        })
+        self.assertEquals(response.status_code, 302)   # checks that the method redirects succesfully
+
+        job = Jobs.objects.last()
+
+        # check that method is updating all the attributes
+        self.assertEquals(job.status, "Interviewing", "Job status was not updated")
+        self.assertEquals(job.title, "New job title", "Job title was not updated")
+        self.assertEquals(job.company, "New company name", "Job company was not updated")
+        # TODO: uncomment the test below when the location is added to edit form
+        # self.assertEquals(job.location, "Middle of nowhere", "Job location was not updated")
+
+        # check that a user can't edit a job that don't belongs to him

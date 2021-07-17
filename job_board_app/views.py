@@ -198,7 +198,8 @@ def update_job(request, id):
         _status = request.POST['status']
         _title = request.POST['title']
         _company = request.POST['company']
-        _location = request.POST['location']
+
+        # TODO: Add way to update location in the form(front end) and the logic here too
 
         job.status = _status
         job.title = _title

@@ -23,6 +23,7 @@ class TestViews(TestCase):
 
         self.client = Client()
 
+        # FORMAT: self.[method_name]_url = reverse("[url_name]", [url_parameter])
         self.index_url = reverse("index")
         self.jobs_url = reverse("render_jobs")
         self.search_job_url = reverse("job_search_logic")
@@ -32,7 +33,9 @@ class TestViews(TestCase):
         self.viewed_jobs_handler_url = reverse("viewed_job_handler", args=[job.id])
         self.edit_job_url = reverse("edit_job_form", args=[job.id])
         self.update_job_url = reverse("update_job_logic", args=[job.id])
+        self.delete_job_url = reverse("delete_job", args=[job.id])
 
+    # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
         response = self.client.get(self.index_url)
         self.assertEquals(response.status_code, 200)    # checks that page is rendering
@@ -115,7 +118,7 @@ class TestViews(TestCase):
         self.assertEquals(response.context["job"], self.job)
 
     # check that all job attributes were updated
-    def test_update_job_url_view(self):
+    def test_update_job_view(self):
         session = self.client.session
         session['userid'] = 1
         session.save()
@@ -139,3 +142,19 @@ class TestViews(TestCase):
 
         # test the code used in the method to validate that the logged user can
         self.assertEquals(job.user_jobs, self.user, "The user that create the job instance don't match the logged user")
+
+    # check that job is deleted *IF* the logged user was the one that created the job instance
+    def test_delete_job_view(self):
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
+        # validate the method used to check that user has the authorization to delete the job
+        self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
+
+        response = self.client.delete(self.delete_job_url)
+        self.assertEquals(response.status_code, 302)   # checks that the method redirects succesfully
+
+        # make sure that the job was deleted
+        job = Jobs.objects.last()
+        self.assertIsNone(job, "Job was not deleted")

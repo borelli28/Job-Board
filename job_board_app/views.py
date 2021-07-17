@@ -220,6 +220,7 @@ def delete_job(request, id):
     # get job instance
     job = Jobs.objects.get(id=id)
 
+    # NOTE: if the if statement argument is edited makes sure to edit the test case for this method too. Line: 153 in test_views.py
     # check that the job we are deleting belongs to the logged user
     if job.user_jobs == user:
         job.delete()

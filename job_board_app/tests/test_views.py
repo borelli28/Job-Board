@@ -14,6 +14,7 @@ class TestViews(TestCase):
 
         # create a job instance for testing purposes
         job = Jobs.objects.create(status="Applied", title="Software Dev", company="Cheap Labor Inc.", url="https://borelliarmando.com/", location="Austin, TX", user_jobs=user)
+        self.job = job
 
         self.client = Client()
 
@@ -24,6 +25,7 @@ class TestViews(TestCase):
         self.set_job_url = reverse("save_job_info")
         self.go_to_job_url = reverse("go_to_job")
         self.viewed_jobs_handler_url = reverse("viewed_job_handler", args=[job.id])
+        self.edit_job_url = reverse("edit_job_form", args=[job.id])
 
     def test_index_view(self):
         response = self.client.get(self.index_url)
@@ -77,6 +79,7 @@ class TestViews(TestCase):
         session['userid'] = 1
         session.save()
 
+        # check that view redirect to another URL
         response = self.client.get(self.viewed_jobs_handler_url)
         self.assertEquals(response.status_code, 302)
 
@@ -93,3 +96,12 @@ class TestViews(TestCase):
         })
         job = Jobs.objects.last()
         self.assertIsNone(job, "viewed_jobs_handler did not delete the job when POST is 'no' ")
+
+    # render the edit_job_page
+    def test_edit_job_view(self):
+
+        response = self.client.get(self.edit_job_url)
+        self.assertEquals(response.status_code, 200)
+
+        # check that job passed(as an id) is the one returned in context
+        self.assertEquals(response.context["job"], self.job)

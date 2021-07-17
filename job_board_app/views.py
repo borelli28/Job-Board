@@ -170,8 +170,6 @@ def viewed_jobs_handler(request, id):
         print("Error ocurred while getting the post response. Probably user submit empty form")
         return redirect('/tracker_app')
 
-
-
     return redirect('/tracker_app')
 
 # renders edit job form

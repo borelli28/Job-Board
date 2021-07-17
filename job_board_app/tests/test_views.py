@@ -35,6 +35,7 @@ class TestViews(TestCase):
         self.update_job_url = reverse("update_job_logic", args=[job.id])
         self.delete_job_url = reverse("delete_job", args=[job.id])
         self.job_note_url = reverse("render_job_note", args=[job.id])
+        self.update_note_url = reverse("update_job_note", args=[job.id])
 
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
@@ -177,3 +178,20 @@ class TestViews(TestCase):
 
         # check that the note in context is the same note of the job instance passed
         self.assertTrue(response.context["note"] == self.job.note, "Note in context is not the same one from the job passed")
+
+    # make sure that redirect return 302(which means redirect was a success), job note is updated & validate the user authorization
+    def test_update_note_view(self):
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
+        # validate the method used to check that user has the authorization to edit the job note
+        self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
+
+        response = self.client.post(self.update_note_url, {
+            "note": "Some text here about the application that we want to save in notes"
+        })
+        self.assertEquals(response.status_code, 302, "Redirect was unsuccesfull for some reason")   # checks that the method redirects succesfully
+
+        job = Jobs.objects.last()
+        self.assertEquals(job.note, "Some text here about the application that we want to save in notes", "Job note was not updated")

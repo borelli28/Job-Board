@@ -153,9 +153,6 @@ def viewed_jobs_handler(request, id):
     # get job instance
     job = Jobs.objects.get(id=id)
 
-    print("job instance:")
-    print(job.title)
-
     try:
         # user applied to the job so change job status to applied
         if 'yes' in request.POST["applied?"]:

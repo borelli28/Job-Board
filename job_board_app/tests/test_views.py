@@ -11,6 +11,7 @@ class TestViews(TestCase):
         # create user instance to test views from
         User.objects.create(email="test@test", password="123")
         user = User.objects.get(id=1)
+        self.user = user
 
         session = self.client.session
         session['userid'] = user.id
@@ -113,7 +114,7 @@ class TestViews(TestCase):
         # check that job passed(as an id) is the one returned in context
         self.assertEquals(response.context["job"], self.job)
 
-    # check that all job attributes were updated and also that only the user that created the instance can edit the instance
+    # check that all job attributes were updated
     def test_update_job_url_view(self):
         session = self.client.session
         session['userid'] = 1
@@ -136,4 +137,5 @@ class TestViews(TestCase):
         # TODO: uncomment the test below when the location is added to edit form
         # self.assertEquals(job.location, "Middle of nowhere", "Job location was not updated")
 
-        # check that a user can't edit a job that don't belongs to him
+        # test the code used in the method to validate that the logged user can
+        self.assertEquals(job.user_jobs, self.user, "The user that create the job instance don't match the logged user")

@@ -191,7 +191,7 @@ def update_job(request, id):
     # get job instance
     job = Jobs.objects.get(id=id)
 
-
+    # NOTE: if the if statement argument is changed you need to update the test case in: tests/test_views.py - line: 141
     # check that the job we are editing belongs to the logged user
     if job.user_jobs == user:
 

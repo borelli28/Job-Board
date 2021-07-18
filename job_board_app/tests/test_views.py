@@ -18,8 +18,8 @@ class TestViews(TestCase):
         session.save()
 
         # create a job instance for testing purposes
-        job = Jobs.objects.create(status="Applied", title="Software Dev", company="Cheap Labor Inc.", url="https://borelliarmando.com/", location="Austin, TX", user_jobs=user)
-        self.job = job
+        self.job = Jobs.objects.create(status="Applied", title="Software Dev", company="Some Tech Co.",
+        url="https://borelliarmando.com/", location="Austin, TX", user_jobs=user)
 
         self.client = Client()
 
@@ -30,12 +30,12 @@ class TestViews(TestCase):
         self.tracker_app_url = reverse("render_tracker_app")
         self.set_job_url = reverse("save_job_info")
         self.go_to_job_url = reverse("go_to_job")
-        self.viewed_jobs_handler_url = reverse("viewed_job_handler", args=[job.id])
-        self.edit_job_url = reverse("edit_job_form", args=[job.id])
-        self.update_job_url = reverse("update_job_logic", args=[job.id])
-        self.delete_job_url = reverse("delete_job", args=[job.id])
-        self.job_note_url = reverse("render_job_note", args=[job.id])
-        self.update_note_url = reverse("update_job_note", args=[job.id])
+        self.viewed_jobs_handler_url = reverse("viewed_job_handler", args=[self.job.id])
+        self.edit_job_url = reverse("edit_job_form", args=[self.job.id])
+        self.update_job_url = reverse("update_job_logic", args=[self.job.id])
+        self.delete_job_url = reverse("delete_job", args=[self.job.id])
+        self.job_note_url = reverse("render_job_note", args=[self.job.id])
+        self.update_note_url = reverse("update_job_note", args=[self.job.id])
 
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):

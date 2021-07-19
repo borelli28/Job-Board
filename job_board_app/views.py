@@ -271,4 +271,8 @@ def update_note(request, id):
 
 # renders the add job manually form
 def new_job(request):
-    pass
+    # get logged user
+    user = User.objects.get(id=request.session['userid'])
+
+    context = {"user": user}
+    return render(request, 'new_job.html', context)

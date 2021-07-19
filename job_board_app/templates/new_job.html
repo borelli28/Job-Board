@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Add Job</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/edit_job_style.css' %}">
+  </head>
+  <body>
+
+    <nav>
+      <button class="btn btn-light"><a href="/jobs">Job Search</a></button>
+      <button class="btn btn-light"><a href="/tracker_app">Applications</a></button>
+      <button class="btn btn-danger"><a href="/login">Logout</a></button>
+    </nav>
+
+    <main>
+
+      <h1>Edit: {{ job.title }}</h1>
+
+      <form action="/tracker_app/add_new_job" method="post" type="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="user_jobs" value="{{ user }}" />
+        <div>
+          <label for="status">Status</label>
+          <select name="status">
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Ghosted">Ghosted</option>
+          </select>
+        </div>
+        <div>
+          <label for="title">Title</label>
+          <input type="text" name="title"/>
+        </div>
+        <div>
+          <label for="company">Company</label>
+          <input type="text" name="company"/>
+        </div>
+        <div>
+          <label for="location">Location</label>
+          <input type="text" name="location"/>
+        </div>
+        <div>
+          <button type="submit">Add Job</button>
+        </div>
+      </form>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  </body>
+</html>

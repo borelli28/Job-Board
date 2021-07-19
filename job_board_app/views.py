@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from job_board_app.models import *
 import requests
 import sys
@@ -8,14 +8,14 @@ from django.utils.html import strip_tags
 from django.core.paginator import Paginator, EmptyPage
 
 
-def index(request):
+def login(request):
 
     # get user id and save it into session
     user = User.objects.get(id=1)
 
     request.session['userid'] = 1
 
-    return HttpResponse("hello")
+    return render(request, 'login.html')
 
 # render jobs page
 def jobs(request):

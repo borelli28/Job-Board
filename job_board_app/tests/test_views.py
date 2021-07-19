@@ -24,7 +24,7 @@ class TestViews(TestCase):
         self.client = Client()
 
         # FORMAT: self.[method_name]_url = reverse("[url_name]", [url_parameter])
-        self.index_url = reverse("index")
+        self.login_url = reverse("login")
         self.jobs_url = reverse("render_jobs")
         self.search_job_url = reverse("job_search_logic")
         self.tracker_app_url = reverse("render_tracker_app")
@@ -40,10 +40,10 @@ class TestViews(TestCase):
         self.add_job_url = reverse("add_job")
 
     # FORMAT: test_[method_name]_view(self)
-    def test_index_view(self):
-        response = self.client.get(self.index_url)
-        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")    # checks that page is rendering
-        self.assertEquals(response.content, b"hello", "index() method did not return 'hello' response")
+    # def test_login_view(self):
+    #     response = self.client.get(self.login_url)
+    #     self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")    # checks that page is rendering
+    #     self.assertEquals(response, 'login.html', "Method render the wrong template")
 
     def test_jobs_view(self):
         response = self.client.get(self.jobs_url)

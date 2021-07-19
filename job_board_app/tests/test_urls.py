@@ -7,9 +7,9 @@ from job_board_app.views import *
 class TestUrls(SimpleTestCase):
 
     # test url by: checking the url name resolves to the views method
-    def test_index_url(self):
-        url = reverse("index")
-        self.assertEquals(resolve(url).func, index, "index url does not link to the method [index] in views")
+    def test_login_url(self):
+        url = reverse("login")
+        self.assertEquals(resolve(url).func, login, "login url does not link to the method [login] in views")
 
     def test_render_jobs_url(self):
         url = reverse("render_jobs")

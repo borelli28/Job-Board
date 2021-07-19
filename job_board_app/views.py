@@ -72,7 +72,11 @@ def search_job(request):
     except EmptyPage:
         page = p.page(1)
 
-    return render(request, 'jobs.html', { "jobs": page })
+    print("pages: " + str(len(page)))
+    # send alert if num of pages is 0
+    num_pages = len(page)
+
+    return render(request, 'jobs.html', { "jobs": page, "num_pages": num_pages })
 
 # renders the tracker app page
 def tracker_app(request):
@@ -294,7 +298,7 @@ def add_job(request):
     if 'user_jobs' in request.POST:
         user_id = request.POST['user_jobs']
         _user = User.objects.get(id=user_id)
-        
+
         if 'status' in request.POST:
             _status = request.POST['status']
         else:

@@ -17,12 +17,12 @@
 
     <main>
 
-      <!-- {% if jobs|length == 0 %}
+      {% if num_pages == 0 %}
       <div class="alert alert-danger alert-dismissible fade show" role="alert" id="no-jobs-alert">
-        <strong>No Jobs Found!</strong> Please check your search input.
+        <strong>No Jobs Found!</strong> We could not found any job posting with the given parameters.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      {% endif %} -->
+      {% endif %}
 
       <form action="/search_job" method="post" type="post" enctype="multipart/form-data" id="search_job_form">
         {% csrf_token %}

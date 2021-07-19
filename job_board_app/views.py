@@ -294,27 +294,27 @@ def add_job(request):
     if 'user_jobs' in request.POST:
         user_id = request.POST['user_jobs']
         _user = User.objects.get(id=user_id)
-        if 'status' in request.POST:
+        if request.POST['status'] and not request.POST['status'].isspace():
             _status = request.POST['status']
         else:
             _status = "Applied"
 
-        if 'title' in request.POST:
+        if request.POST['title'] and not request.POST['title'].isspace():
             _title = request.POST['title']
         else:
             _title = "None Provided"
 
-        if 'company' in request.POST:
+        if request.POST['company'] and not request.POST['company'].isspace():
             _company = request.POST['company']
         else:
             _company = "None Provided"
 
-        if 'url' in request.POST:
+        if request.POST['url'] and not request.POST['url'].isspace():
             _url = request.POST['url']
         else:
             _url = "None Provided"
 
-        if 'location' in request.POST:
+        if request.POST['location'] and not request.POST['location'].isspace():
             _location = request.POST['location']
         else:
             _location = "None Provided"
@@ -325,4 +325,4 @@ def add_job(request):
         return redirect('/tracker_app')
 
     else:
-        redirect('/tracker_app/new_job_form')
+        return redirect('/tracker_app/new_job_form')

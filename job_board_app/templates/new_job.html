@@ -17,11 +17,11 @@
 
     <main>
 
-      <h1>Edit: {{ job.title }}</h1>
+      <h1>Add a New Job</h1>
 
       <form action="/tracker_app/add_new_job" method="post" type="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" name="user_jobs" value="{{ user }}" />
+        <input type="hidden" name="user_jobs" value="{{ user_id }}" />
         <div>
           <label for="status">Status</label>
           <select name="status">

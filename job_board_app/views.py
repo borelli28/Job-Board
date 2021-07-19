@@ -284,11 +284,45 @@ def new_job(request):
     # get logged user
     dotenv.read_dotenv()
     user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
 
-    context = {"user": user}
+    context = {"user_id": user_id}
     return render(request, 'new_job.html', context)
 
 # handles the post form data from new_job template
 def add_job(request):
-    pass
+
+    if 'user_jobs' in request.POST:
+        user_id = request.POST['user_jobs']
+        _user = User.objects.get(id=user_id)
+        if 'status' in request.POST:
+            _status = request.POST['status']
+        else:
+            _status = "Applied"
+
+        if 'title' in request.POST:
+            _title = request.POST['title']
+        else:
+            _title = None
+
+        if 'company' in request.POST:
+            _company = request.POST['company']
+        else:
+            _company = None
+
+        if 'url' in request.POST:
+            _url = request.POST['url']
+        else:
+            _url = None
+
+        if 'location' in request.POST:
+            _location = request.POST['location']
+        else:
+            _location = None
+
+        new_job = Jobs.objects.create(status=_status, title=_title, company=_company, url=_url, location=_location, user_jobs=_user)
+        print("new job created: " + str(new_job.title))
+
+        return redirect('/tracker_app')
+
+    else:
+        redirect('/tracker_app/new_job_form')

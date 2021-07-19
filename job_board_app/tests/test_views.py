@@ -224,7 +224,12 @@ class TestViews(TestCase):
 
         # test that when passed empty attributes the job instance will add None value to those attributes
         response = self.client.post(self.add_job_url, {
-            "user_jobs": self.user.id
+            "user_jobs": self.user.id,
+            "status": "Applied",
+            "title": "",
+            "company": "",
+            "url": "",
+            "location": "   "
         })
         new_job = Jobs.objects.last()
         self.assertEquals(new_job.user_jobs, self.user, "Method did not use the attribute passed in POST")

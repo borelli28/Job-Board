@@ -294,7 +294,8 @@ def add_job(request):
     if 'user_jobs' in request.POST:
         user_id = request.POST['user_jobs']
         _user = User.objects.get(id=user_id)
-        if request.POST['status'] and not request.POST['status'].isspace():
+        
+        if 'status' in request.POST:
             _status = request.POST['status']
         else:
             _status = "Applied"

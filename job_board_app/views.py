@@ -288,3 +288,7 @@ def new_job(request):
 
     context = {"user": user}
     return render(request, 'new_job.html', context)
+
+# handles the post form data from new_job template
+def add_job(request):
+    pass

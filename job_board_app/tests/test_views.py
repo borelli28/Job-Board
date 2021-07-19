@@ -201,4 +201,8 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'new_job.html', "Method render the wrong template")
 
         # check that the user in context is the correct user
-        self.assertTrue(response.context["user"] == self.user, "User that render the form is not the same as the one in context")
+        self.assertTrue(response.context['user_id'] == str(self.user.id), f"The id ({self.user.id}) of the User that render the form is not the same as the one in context({response.context['user_id']})")
+
+    def test_add_job_view(self):
+        pass
+        # test

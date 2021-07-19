@@ -36,6 +36,7 @@ class TestViews(TestCase):
         self.delete_job_url = reverse("delete_job", args=[self.job.id])
         self.job_note_url = reverse("render_job_note", args=[self.job.id])
         self.update_note_url = reverse("update_job_note", args=[self.job.id])
+        self.new_job_url = reverse("new_job_form")
 
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
@@ -181,9 +182,6 @@ class TestViews(TestCase):
 
     # make sure that redirect return 302(which means redirect was a success), job note is updated & validate the user authorization
     def test_update_note_view(self):
-        session = self.client.session
-        session['userid'] = 1
-        session.save()
 
         # validate the method used to check that user has the authorization to edit the job note
         self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
@@ -195,3 +193,12 @@ class TestViews(TestCase):
 
         job = Jobs.objects.last()
         self.assertEquals(job.note, "Some text here about the application that we want to save in notes", "Job note was not updated")
+
+    def test_new_job_view(self):
+
+        response = self.client.get(self.new_job_url)
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'new_job.html', "Method render the wrong template")
+
+        # check that the user in context is the user in session
+        self.assertTrue(response.context["user"] == self.user, "User that render the form is not the same as the one in context")

@@ -200,5 +200,5 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
         self.assertTemplateUsed(response, 'new_job.html', "Method render the wrong template")
 
-        # check that the user in context is the user in session
+        # check that the user in context is the correct user
         self.assertTrue(response.context["user"] == self.user, "User that render the form is not the same as the one in context")

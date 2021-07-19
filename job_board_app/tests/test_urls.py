@@ -54,3 +54,7 @@ class TestUrls(SimpleTestCase):
     def test_update_job_note_url(self):
         url = reverse("update_job_note", args=["1"])
         self.assertEquals(resolve(url).func, update_note)
+
+    def test_new_job_url(self):
+        url = reverse("new_job_form")
+        self.assertEquals(resolve(url).func, new_job, "new_job_form url does not link to the method [new_job] in views")

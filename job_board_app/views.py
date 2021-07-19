@@ -268,3 +268,7 @@ def update_note(request, id):
     else:
         print("User don't have permission to access these resources")
         return redirect('/tracker_app')
+
+# renders the add job manually form
+def new_job(request):
+    pass

@@ -85,12 +85,12 @@ def tracker_app(request):
     viewed_jobs = []
 
     for job in jobs:
-        if job.status == "viewed":
+        if job.status == "Viewed":
             # append to viewed jobs
             viewed_jobs.append(job)
 
     # Only show jobs in the table that user apply to.
-    jobs = Jobs.objects.exclude(status="viewed")
+    jobs = Jobs.objects.exclude(status="Viewed")
 
     # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
     p = Paginator(viewed_jobs, 3)

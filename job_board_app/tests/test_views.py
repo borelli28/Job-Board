@@ -37,6 +37,7 @@ class TestViews(TestCase):
         self.job_note_url = reverse("render_job_note", args=[self.job.id])
         self.update_note_url = reverse("update_job_note", args=[self.job.id])
         self.new_job_url = reverse("new_job_form")
+        self.add_job_url = reverse("add_job")
 
     # FORMAT: test_[method_name]_view(self)
     def test_index_view(self):
@@ -204,5 +205,30 @@ class TestViews(TestCase):
         self.assertTrue(response.context['user_id'] == str(self.user.id), f"The id ({self.user.id}) of the User that render the form is not the same as the one in context({response.context['user_id']})")
 
     def test_add_job_view(self):
-        pass
-        # test
+        # test that all attributes are being added correctly to the new job instance
+        response = self.client.post(self.add_job_url, {
+            "user_jobs": self.user.id,
+            "status": "Applied",
+            "title": "Amazon CEO",
+            "company": "Amazon Inc.",
+            "url": "https://somewhere.com/",
+            "location": "Seattle, WA"
+        })
+        self.assertEquals(response.status_code, 302, "Method did not redirect, it's supposed to return a 302 code")
+        new_job = Jobs.objects.last()
+        self.assertEquals(new_job.user_jobs, self.user, "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.status, "Applied", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.title, "Amazon CEO", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.url, "https://somewhere.com/", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.location, "Seattle, WA", "Method did not use the attribute passed in POST")
+
+        # test that when passed empty attributes the job instance will add None value to those attributes
+        response = self.client.post(self.add_job_url, {
+            "user_jobs": self.user.id
+        })
+        new_job = Jobs.objects.last()
+        self.assertEquals(new_job.user_jobs, self.user, "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.status, "Applied", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.title, "None Provided", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.url, "None Provided", "Method did not use the attribute passed in POST")
+        self.assertEquals(new_job.location, "None Provided", "Method did not use the attribute passed in POST")

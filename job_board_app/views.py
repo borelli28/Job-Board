@@ -302,22 +302,22 @@ def add_job(request):
         if 'title' in request.POST:
             _title = request.POST['title']
         else:
-            _title = None
+            _title = "None Provided"
 
         if 'company' in request.POST:
             _company = request.POST['company']
         else:
-            _company = None
+            _company = "None Provided"
 
         if 'url' in request.POST:
             _url = request.POST['url']
         else:
-            _url = None
+            _url = "None Provided"
 
         if 'location' in request.POST:
             _location = request.POST['location']
         else:
-            _location = None
+            _location = "None Provided"
 
         new_job = Jobs.objects.create(status=_status, title=_title, company=_company, url=_url, location=_location, user_jobs=_user)
         print("new job created: " + str(new_job.title))

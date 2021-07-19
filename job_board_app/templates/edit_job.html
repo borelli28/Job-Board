@@ -17,7 +17,7 @@
 
     <main>
 
-      <h1>Edit: {{ job.title }}</h1>
+      <h1>Edit: {{ job.title }} at {{ job.company }}</h1>
 
       <form action="/tracker_app/edit_job/update/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
         {% csrf_token %}

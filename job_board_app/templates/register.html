@@ -3,29 +3,32 @@
   <head>
     <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <title>Login</title>
+    <title>Register</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles/jobs_style.css' %}">
   </head>
   <body>
 
     <main>
-      <div id="login">
-        <h2>Login</h2>
-        <form action="/log_user" method="post">
+      <div id="registration">
+        <h2>Register</h2>
+        <form action="/register_user" method="post">
           {% csrf_token %}
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" name="email">
+            <input type="email" class="form-control" name="email" required>
 
             <label for="password">Password</label>
-            <input type="password" class="form-control" name="password">
+            <input type="password" class="form-control" name="password" required>
 
-            <button type="submit" class="btn btn-danger">Login</button>
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" required>
+
+            <button type="submit" class="btn btn-danger">Register</button>
           </div>
         </form>
       </div>
-      <a href="/register">Or Register Here</a>
+      <a href="/">Go back</a>
     </main>
 
   </body>

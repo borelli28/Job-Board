@@ -9,7 +9,6 @@ from django.core.paginator import Paginator, EmptyPage
 
 
 def login(request):
-
     # get user id and save it into session
     user = User.objects.get(id=1)
 

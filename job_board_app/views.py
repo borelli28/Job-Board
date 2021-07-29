@@ -55,43 +55,33 @@ def login(request):
 
     return render(request, 'login.html')
 
-# handles the data from seller login form in login.html
+# handles the data from user login in login.html
 def log_user(request):
 
-    # pass the post data to the method we wrote and save the response in a variable called errors
-    errors = Seller.objects.seller_login_validator(request.POST)
+    errors = User.objects.user_register_val(request.POST)
     # check if the errors dictionary has anything in it
     if len(errors) > 0:
-        # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
         for key, value in errors.items():
             messages.error(request, value)
         # redirect the user back to the form to fix the errors
-        return redirect('/seller_login')
+        return redirect('/')
 
     else:
-        # see if the username provided exists in the database. Seller uses filter because it will return a list of sellers that have the provided email
-        seller = Seller.objects.filter(email=request.POST['email'])
-        print("Inside log_user method")
+        # see if the username provided exists in the database.
+        user = User.objects.filter(username=request.POST['username'])
 
-        if len(seller) > 0: # note that we take advantage of truthiness here: an empty list will return false
-            logged_seller = seller[0]
-            # assuming we only have one user with this username, the user would be first in the list we get back
-            # of course, we should have some logic to prevent duplicates of usernames when we create users
-            # use bcrypt's check_password_hash method, passing the hash from our database and the password from the form
-            print("inside the first if statement")
-            if bcrypt.checkpw(request.POST['password'].encode(), logged_seller.password.encode()):
-                # if we get True after checking the password, we may put the user id in session
-                request.session['sellerid'] = logged_seller.id
+        if len(user) > 0:
+            logged_user = user[0]
 
-                # saves email in session so we can use it to check if user is log-in in success.
-                request.session['email'] = request.POST['email']
+            if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
+                request.session['userid'] = logged_seller.id
+                request.session['username'] = request.POST['username']
 
-                # never render on a post, always redirect!
-                return redirect('/dashboard')
+                return redirect('/jobs')
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
     # redirect back to a safe route
-    return redirect('/seller_login')
+    return redirect('/')
 
 # render jobs page
 def jobs(request):

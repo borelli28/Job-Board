@@ -9,7 +9,7 @@ class TestViews(TestCase):
 
     def setUp(self):
         # create user instance to test views from
-        User.objects.create(email="test@test", password="123")
+        User.objects.create(username="testuser", password="12345678")
         user = User.objects.get(id=1)
         self.user = user
 

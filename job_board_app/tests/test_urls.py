@@ -11,6 +11,10 @@ class TestUrls(SimpleTestCase):
         url = reverse("login")
         self.assertEquals(resolve(url).func, login, "login url does not link to the method [login] in views")
 
+    def test_log_user_url(self):
+        url = reverse("log_user")
+        self.assertEquals(resolve(url).func, log_user, "log_user url does not link to the method [log_user] in views")
+
     def test_render_jobs_url(self):
         url = reverse("render_jobs")
         self.assertEquals(resolve(url).func, jobs, "render_jobs url does not link to the method [jobs] in views")

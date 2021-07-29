@@ -7,7 +7,46 @@ import os
 from django.utils.html import strip_tags
 from django.core.paginator import Paginator, EmptyPage
 
+# def register_seller(request):
+#
+#     # pass the post data to the method we wrote and save the response in a variable called errors
+#     errors = Seller.objects.seller_register_val(request.POST)
+#     # check if the errors dictionary has anything in it
+#     if len(errors) > 0:
+#         # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
+#         for key, value in errors.items():
+#             messages.error(request, value)
+#         # redirect the user back to the form to fix the errors
+#         return redirect('/seller_login')
+#
+#     else:
+#         # if the errors object is empty, that means there were no errors!
+#
+#         _first_name = request.POST['first_name']
+#         _last_name = request.POST['last_name']
+#         _email = request.POST['email']
+#         _password = request.POST['password']
+#
+#         # Hash the password using bcrypt
+#         pw_hash = bcrypt.hashpw(_password.encode(), bcrypt.gensalt()).decode()
+#         # Create the object instance
+#         seller = Seller.objects.create(first_name=_first_name, last_name=_last_name, email=_email, password=pw_hash)
+#
+#         print("POST data:")
+#         print(_first_name)
+#         print(_last_name)
+#         print(_email)
+#         print(pw_hash)
+#
+#         print("Seller Created:")
+#         print(Seller.objects.last())
+#
+#         # save the sellerid in session
+#         request.session['sellerid'] = seller.id
+#
+#         return redirect('/dashboard')
 
+# renders the login page
 def login(request):
     # get user id and save it into session
     user = User.objects.get(id=1)
@@ -15,6 +54,44 @@ def login(request):
     request.session['userid'] = 1
 
     return render(request, 'login.html')
+
+# handles the data from seller login form in login.html
+def log_user(request):
+
+    # pass the post data to the method we wrote and save the response in a variable called errors
+    errors = Seller.objects.seller_login_validator(request.POST)
+    # check if the errors dictionary has anything in it
+    if len(errors) > 0:
+        # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
+        for key, value in errors.items():
+            messages.error(request, value)
+        # redirect the user back to the form to fix the errors
+        return redirect('/seller_login')
+
+    else:
+        # see if the username provided exists in the database. Seller uses filter because it will return a list of sellers that have the provided email
+        seller = Seller.objects.filter(email=request.POST['email'])
+        print("Inside log_user method")
+
+        if len(seller) > 0: # note that we take advantage of truthiness here: an empty list will return false
+            logged_seller = seller[0]
+            # assuming we only have one user with this username, the user would be first in the list we get back
+            # of course, we should have some logic to prevent duplicates of usernames when we create users
+            # use bcrypt's check_password_hash method, passing the hash from our database and the password from the form
+            print("inside the first if statement")
+            if bcrypt.checkpw(request.POST['password'].encode(), logged_seller.password.encode()):
+                # if we get True after checking the password, we may put the user id in session
+                request.session['sellerid'] = logged_seller.id
+
+                # saves email in session so we can use it to check if user is log-in in success.
+                request.session['email'] = request.POST['email']
+
+                # never render on a post, always redirect!
+                return redirect('/dashboard')
+
+    # if we didn't find anything in the database by searching by username or if the passwords don't match,
+    # redirect back to a safe route
+    return redirect('/seller_login')
 
 # render jobs page
 def jobs(request):

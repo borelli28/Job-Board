@@ -6,17 +6,17 @@ class TestUserModel(TestCase):
 
     def setUp(self):
         # create user instance
-        self.user = User.objects.create(email="test@test", password="123345678")
+        self.user = User.objects.create(username="testusername", password="123345678")
 
     # check attributes are the correct type
     def test_user_field(self):
-        self.assertIsInstance(self.user.email, str, "User email is not String type")
+        self.assertIsInstance(self.user.username, str, "User name is not String type")
         self.assertIsInstance(self.user.password, str, "User password is not String type")
 
 class TestJobsModel(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(email="test@test", password="123345678")
+        self.user = User.objects.create(username="testusername", password="123345678")
         self.job = Jobs.objects.create(status="Applied", title="Software Dev", company="Some Tech Co.",
         url="https://borelliarmando.com/", location="Austin, TX", user_jobs=self.user)
 

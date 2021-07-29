@@ -1,0 +1,8 @@
+/* * {
+  outline: 1px dashed red;
+} */
+
+body {
+  display: flex;
+  justify-content: center;
+}

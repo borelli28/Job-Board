@@ -6,8 +6,14 @@ class ValidatorManager(models.Manager):
     def user_register_val(self, postData):
         errors = {}
 
-        if len(postData['email']) < 3:
-            errors["email"] = "Email should be at least 3 characters long"
+        # if len(postData['email']) < 3:
+        #     errors["email"] = "Email should be at least 3 characters long"
+
+        if len(postData['username']) < 30:
+            errors["username"] = "Username cannot be longer than 30 characters"
+
+        if len(postData['username']) < 3:
+            errors["username"] = "Username should be at least 3 characters long"
 
         if len(postData['password']) < 8:
             errors["password"] = "Password should be at least 8 characters"
@@ -16,14 +22,18 @@ class ValidatorManager(models.Manager):
             errors["password"] = "Passwords do not match"
 
         # Check if email already exist in database
-        if User.objects.filter(email=postData['email']):
-            errors["email"] = "Email already exist. Please enter a different email or Log in into your account."
+        # if User.objects.filter(email=postData['email']):
+        #     errors["email"] = "Email already exist. Please enter a different email or Log in into your account."
+
+        if User.objects.filter(username=postData['username']):
+            errors["username"] = "Username is not available, please enter a different username."
 
         return errors
 
 class User(models.Model):
 
-    email = models.EmailField(max_length=254)
+    username = models.CharField(max_length=30)
+    # email = models.EmailField(max_length=254)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

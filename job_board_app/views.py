@@ -58,7 +58,7 @@ def login(request):
 # handles the data from user login in login.html
 def log_user(request):
 
-    errors = User.objects.user_register_val(request.POST)
+    errors = User.objects.user_login_validator(request.POST)
     # check if the errors dictionary has anything in it
     if len(errors) > 0:
         for key, value in errors.items():

@@ -12,9 +12,6 @@ class ValidatorManager(models.Manager):
         if len(postData['username']) < 30:
             errors["username"] = "Username cannot be longer than 30 characters"
 
-        if len(postData['username']) < 3:
-            errors["username"] = "Username should be at least 3 characters long"
-
         if len(postData['password']) < 8:
             errors["password"] = "Password should be at least 8 characters"
 
@@ -27,6 +24,22 @@ class ValidatorManager(models.Manager):
 
         if User.objects.filter(username=postData['username']):
             errors["username"] = "Username is not available, please enter a different username."
+
+        return errors
+
+    def user_login_validator(self, postData):
+        errors = {}
+
+        if len(postData['password']) < 8:
+            errors["password"] = "Password should be at least 8 characters"
+
+        if len(postData['username']) < 3:
+            errors["username"] = "Username should be at least 3 characters long"
+
+        if User.objects.filter(username=postData['username']):
+            pass
+        else:
+            errors['username'] = "Wrong Username"
 
         return errors
 

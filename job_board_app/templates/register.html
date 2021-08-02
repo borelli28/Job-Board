@@ -10,6 +10,13 @@
   <body>
 
     <main>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }} alert-danger"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
       <div id="registration">
         <h2>Register</h2>
         <form action="/register_user" method="post">

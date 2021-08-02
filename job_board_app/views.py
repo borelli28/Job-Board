@@ -18,13 +18,15 @@ def register_user(request):
     errors = User.objects.user_register_val(request.POST)
     # check if the errors dictionary has anything in it
     if len(errors) > 0:
+        print("validation errors found")
         # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
         for key, value in errors.items():
             messages.error(request, value)
         # redirect the user back to the form to fix the errors
-        return redirect('/')
+        return redirect('/register')
 
     else:
+        print("no validations errors found")
         _username = request.POST['username']
         _password = request.POST['password']
 

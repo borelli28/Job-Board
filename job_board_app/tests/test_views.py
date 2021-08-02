@@ -24,6 +24,8 @@ class TestViews(TestCase):
         self.client = Client()
 
         # FORMAT: self.[method_name]_url = reverse("[url_name]", [url_parameter])
+        self.register_url = reverse("register")
+        self.register_user_url = reverse("register_user")
         self.login_url = reverse("login")
         self.jobs_url = reverse("render_jobs")
         self.search_job_url = reverse("job_search_logic")
@@ -38,13 +40,34 @@ class TestViews(TestCase):
         self.update_note_url = reverse("update_job_note", args=[self.job.id])
         self.new_job_url = reverse("new_job_form")
         self.add_job_url = reverse("add_job")
-        self.register_url = reverse("register")
 
     # FORMAT: test_[method_name]_view(self)
     def test_register_view(self):
         response = self.client.get(self.register_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
         self.assertTemplateUsed(response, 'register.html', "Method render the wrong template")
+
+    def test_register_user_view(self):
+        # if POST request was succesful
+        response = self.client.post(self.register_user_url, {
+            "username": "testusername1001012349",
+            "password": "somepassword",
+            "confirm_password": "somepassword"
+        })
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code") # redirect() returns a 302 code instead of a 200
+        new_user = User.objects.last()
+        self.assertEquals(new_user.username, "testusername1001012349", "Username passed in POST req is not the same being saved in the DB")
+        self.assertNotEqual(new_user.password, "somepassword", "Literal user password is being saved in the DB(user password is not being hashed)") # checks that password is being hashed with bcrypt as we are not saving the literal password in the DB
+
+        # test if POST request was not succesful(validation errors found)
+        response = self.client.post(self.register_user_url, {
+            "username": "us",
+            "password": "some",
+            "confirm_password": "somepassword"
+        })
+        last_user = User.objects.last()
+        self.assertNotEqual(last_user.username, "us", "When passed an invalid username in POST it did saved the user in the DB") # check that user data is not being saved in the DB if POST request contains validation errors
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
 
     def test_login_view(self):
         response = self.client.get(self.login_url)

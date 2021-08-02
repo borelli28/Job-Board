@@ -15,7 +15,6 @@ def register(request):
 
 def register_user(request):
 
-    # pass the post data to the method we wrote and save the response in a variable called errors
     errors = User.objects.user_register_val(request.POST)
     # check if the errors dictionary has anything in it
     if len(errors) > 0:
@@ -26,18 +25,12 @@ def register_user(request):
         return redirect('/')
 
     else:
-        # if the errors object is empty, that means there were no errors!
         _username = request.POST['username']
         _password = request.POST['password']
 
-        # Hash the password using bcrypt
         pw_hash = bcrypt.hashpw(_password.encode(), bcrypt.gensalt()).decode()
-        # Create the object instance
-        user = User.objects.create(username=_username, password=pw_hash)
 
-        print("POST data:")
-        print(_username)
-        print(pw_hash)
+        user = User.objects.create(username=_username, password=pw_hash)
 
         print("User Created:")
         print(User.objects.last().username)

@@ -38,8 +38,14 @@ class TestViews(TestCase):
         self.update_note_url = reverse("update_job_note", args=[self.job.id])
         self.new_job_url = reverse("new_job_form")
         self.add_job_url = reverse("add_job")
+        self.register_url = reverse("register")
 
     # FORMAT: test_[method_name]_view(self)
+    def test_register_view(self):
+        response = self.client.get(self.register_url)
+        self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
+        self.assertTemplateUsed(response, 'register.html', "Method render the wrong template")
+
     def test_login_view(self):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")    # checks that page is rendering

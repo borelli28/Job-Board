@@ -63,7 +63,7 @@ def log_user(request):
             logged_user = user[0]
 
             if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
-                request.session['userid'] = logged_seller.id
+                request.session['userid'] = logged_user.id
                 request.session['username'] = request.POST['username']
 
                 return redirect('/jobs')

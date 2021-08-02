@@ -27,6 +27,7 @@ class TestViews(TestCase):
         self.register_url = reverse("register")
         self.register_user_url = reverse("register_user")
         self.login_url = reverse("login")
+        self.log_user_url = reverse("log_user")
         self.jobs_url = reverse("render_jobs")
         self.search_job_url = reverse("job_search_logic")
         self.tracker_app_url = reverse("render_tracker_app")
@@ -55,6 +56,7 @@ class TestViews(TestCase):
             "confirm_password": "somepassword"
         })
         self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code") # redirect() returns a 302 code instead of a 200
+        self.assertEquals(response.url, "/jobs", "Method redirected to wrong URL")
         new_user = User.objects.last()
         self.assertEquals(new_user.username, "testusername1001012349", "Username passed in POST req is not the same being saved in the DB")
         self.assertNotEqual(new_user.password, "somepassword", "Literal user password is being saved in the DB(user password is not being hashed)") # checks that password is being hashed with bcrypt as we are not saving the literal password in the DB
@@ -68,11 +70,15 @@ class TestViews(TestCase):
         last_user = User.objects.last()
         self.assertNotEqual(last_user.username, "us", "When passed an invalid username in POST it did saved the user in the DB") # check that user data is not being saved in the DB if POST request contains validation errors
         self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/register", "Method redirected to wrong URL") # check tha method redirect to right URL
 
     def test_login_view(self):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")    # checks that page is rendering
         self.assertTemplateUsed(response, 'login.html', "Method render the wrong template")
+
+    def test_log_user_view(self):
+        pass
 
     def test_jobs_view(self):
         response = self.client.get(self.jobs_url)

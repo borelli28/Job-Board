@@ -66,6 +66,8 @@ def log_user(request):
                 request.session['userid'] = logged_user.id
                 request.session['username'] = request.POST['username']
 
+                request.session['userid'] = logged_user.id
+
                 return redirect('/jobs')
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
@@ -134,10 +136,7 @@ def search_job(request):
 
 # renders the tracker app page
 def tracker_app(request):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get jobs viewed
     jobs = Jobs.objects.filter(user_jobs=user)
@@ -176,10 +175,7 @@ def tracker_app(request):
 
 # get the job details of the job clicked and saved them in the DB
 def set_job(request):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get job info
     _title = request.POST['title']
@@ -245,10 +241,7 @@ def edit_job(request, id):
 
 # handles job put data from form
 def update_job(request, id):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get job instance
     job = Jobs.objects.get(id=id)
@@ -276,10 +269,7 @@ def update_job(request, id):
         return redirect('/tracker_app')
 
 def delete_job(request, id):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get job instance
     job = Jobs.objects.get(id=id)
@@ -317,10 +307,7 @@ def job_note(request, id):
 
 # update job note
 def update_note(request, id):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get job instance
     job = Jobs.objects.get(id=id)
@@ -339,9 +326,7 @@ def update_note(request, id):
 
 # renders the add job manually form
 def new_job(request):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
+    user = User.objects.get(id=request.session['userid'])
 
     context = {"user_id": user_id}
     return render(request, 'new_job.html', context)

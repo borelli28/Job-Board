@@ -69,7 +69,6 @@ def log_user(request):
                 return redirect('/jobs')
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
-    # redirect back to a safe route
     return redirect('/')
 
 # render jobs page

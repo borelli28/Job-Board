@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
-from job_board_app.models import User, Jobs
+from job_board_app.models import *
 import bcrypt
 import json
 
@@ -11,7 +11,7 @@ class TestViews(TestCase):
     def setUp(self):
         # create user instance to test views from
         User.objects.create(username="testuser", password="12345678")
-        user = User.objects.get(id=1)
+        user = User.objects.get(id=User.objects.last().id)
         self.user = user
 
         session = self.client.session
@@ -111,7 +111,7 @@ class TestViews(TestCase):
 
     def test_tracker_app_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         response = self.client.get(self.tracker_app_url)
@@ -120,7 +120,7 @@ class TestViews(TestCase):
 
     def test_set_job_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         response = self.client.post(self.set_job_url, {
@@ -144,7 +144,7 @@ class TestViews(TestCase):
 
     def test_viewed_jobs_handler_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         # check that view redirect to another URL
@@ -178,7 +178,7 @@ class TestViews(TestCase):
     # check that all job attributes were updated
     def test_update_job_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         response = self.client.post(self.update_job_url, {
@@ -204,7 +204,7 @@ class TestViews(TestCase):
     # check that job is deleted *IF* the logged user was the one that created the job instance
     def test_delete_job_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         # validate the method used to check that user has the authorization to delete the job
@@ -219,7 +219,7 @@ class TestViews(TestCase):
 
     def test_job_note_view(self):
         session = self.client.session
-        session['userid'] = 1
+        session['userid'] = self.user.id
         session.save()
 
         # validate the method used to check that user has the authorization to view the job note
@@ -237,6 +237,9 @@ class TestViews(TestCase):
 
     # make sure that redirect return 302(which means redirect was a success), job note is updated & validate the user authorization
     def test_update_note_view(self):
+        session = self.client.session
+        session['userid'] = self.user.id
+        session.save()
 
         # validate the method used to check that user has the authorization to edit the job note
         self.assertTrue(self.job.user_jobs == self.user, "Logged user is not the one that created the job instance")
@@ -250,13 +253,16 @@ class TestViews(TestCase):
         self.assertEquals(job.note, "Some text here about the application that we want to save in notes", "Job note was not updated")
 
     def test_new_job_view(self):
+        session = self.client.session
+        session['userid'] = self.user.id
+        session.save()
 
         response = self.client.get(self.new_job_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
         self.assertTemplateUsed(response, 'new_job.html', "Method render the wrong template")
 
         # check that the user in context is the correct user
-        self.assertTrue(response.context['user_id'] == str(self.user.id), f"The id ({self.user.id}) of the User that render the form is not the same as the one in context({response.context['user_id']})")
+        self.assertTrue(response.context['user_id'] == self.user.id, f"The id ({self.user.id}) of the User that render the form is not the same as the one in context({response.context['user_id']})")
 
     def test_add_job_view(self):
         # test that all attributes are being added correctly to the new job instance

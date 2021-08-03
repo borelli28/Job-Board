@@ -286,10 +286,7 @@ def delete_job(request, id):
 
 # renders note page
 def job_note(request, id):
-    # get logged user
-    dotenv.read_dotenv()
-    user_id = os.environ.get('user_id')
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.session['userid'])
 
     # get job instance
     job = Jobs.objects.get(id=id)

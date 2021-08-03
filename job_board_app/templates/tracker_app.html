@@ -48,7 +48,11 @@
             <td>{{ job.status }}</td>
             <td>{{ job.title | safe }}</td>
             <td>{{ job.company }}</td>
-            <td><a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">Go to Job Post</a></td>
+            {% if job.url != "None Provided" %}
+              <td><a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">Go to Job Post</a></td>
+            {% else %}
+              <td><a target="_blank" rel="noopener noreferrer">None Provided</a></td>
+            {% endif %}
             <td>{{ job.location }}</td>
             <td>{{ job.date_submitted }}</td>
             <td>

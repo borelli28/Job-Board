@@ -3,6 +3,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 from job_board_app.models import User, Jobs
+import bcrypt
 import json
 
 class TestViews(TestCase):
@@ -70,7 +71,7 @@ class TestViews(TestCase):
         last_user = User.objects.last()
         self.assertNotEqual(last_user.username, "us", "When passed an invalid username in POST it did saved the user in the DB") # check that user data is not being saved in the DB if POST request contains validation errors
         self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
-        self.assertEquals(response.url, "/register", "Method redirected to wrong URL") # check tha method redirect to right URL
+        self.assertEquals(response.url, "/register", "Method redirected to wrong URL") # check the method redirect to right URL
 
     def test_login_view(self):
         response = self.client.get(self.login_url)
@@ -78,7 +79,25 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'login.html', "Method render the wrong template")
 
     def test_log_user_view(self):
-        pass
+        # creates user instance with hashed password for testing login method
+        pw_hash = bcrypt.hashpw("password".encode(), bcrypt.gensalt()).decode()
+        user = User.objects.create(username="test-user", password=pw_hash)
+
+        # succesful post request
+        response = self.client.post(self.log_user_url, {
+            "username": "test-user",
+            "password": "password"
+        })
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/jobs", "Method redirected to wrong URL")
+
+        # test invalid post request
+        response = self.client.post(self.log_user_url, {
+            "username": "test-another-user",
+            "password": "other-password"
+        })
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/", "Method redirected to wrong URL")
 
     def test_jobs_view(self):
         response = self.client.get(self.jobs_url)

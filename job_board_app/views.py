@@ -328,7 +328,7 @@ def update_note(request, id):
 def new_job(request):
     user = User.objects.get(id=request.session['userid'])
 
-    context = {"user_id": user_id}
+    context = {"user_id": user.id}
     return render(request, 'new_job.html', context)
 
 # handles the post form data from new_job template

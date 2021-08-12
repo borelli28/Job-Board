@@ -128,9 +128,9 @@ def search_job(request):
     except EmptyPage:
         page = p.page(1)
 
-    print("pages: " + str(len(page)))
     # send alert if num of pages is 0
     num_pages = len(page)
+    print("pages: " + str(num_pages))
 
     return render(request, 'jobs.html', { "jobs": page, "num_pages": num_pages })
 

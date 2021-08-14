@@ -104,6 +104,17 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code") # test that method returns an OK server response(page renders!)
         self.assertTemplateUsed(response, 'jobs.html', "Method render the wrong template")  # test that method renders the right template
 
+        # check that method is redirecting to '/search_job' url if there is a search param in session
+        session = self.client.session
+        session['what'] = "Software Dev"
+        session['where'] = "Dallas"
+        session.save()
+
+        response = self.client.get(self.jobs_url)
+
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/search_job", "Method redirected to wrong URL")
+
     def test_search_job_view(self):
         response = self.client.get(self.search_job_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")

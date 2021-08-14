@@ -66,8 +66,6 @@ def log_user(request):
                 request.session['userid'] = logged_user.id
                 request.session['username'] = request.POST['username']
 
-                request.session['userid'] = logged_user.id
-
                 return redirect('/jobs')
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
@@ -76,22 +74,32 @@ def log_user(request):
 # render jobs page
 def jobs(request):
 
-    return render(request, 'jobs.html')
+    # if there are what and where are not empty then execute search_job method with this values
+    if ('what' in request.session) or ('where' in request.session):
+        return redirect('/search_job')
+    else:
+        return render(request, 'jobs.html')
 
 # makes API call for jobs and then re render the page with the response from the API
 def search_job(request):
-    print("inside search_job")
 
     what = ""
     where = ""
 
+    # if the user goes back to job results page then we use the parameters in session to return job results
+    if 'what' in request.session:
+        what = request.session['what']
+        where = request.session['where']
+
     if 'what' in request.POST:
-        what = request.POST["what"]
+        what = request.POST['what']
+        request.session['what'] = what
     else:
         print("['what'] empty")
 
     if 'where' in request.POST:
-        where = request.POST["where"]
+        where = request.POST['where']
+        request.session['where'] = where
     else:
         print("['where'] empty")
 
@@ -107,7 +115,7 @@ def search_job(request):
     data = response.json()
     results = data["results"]
 
-    # get each job data
+    # get each job data in an array of objects
     jobs = []
 
     for job in results:

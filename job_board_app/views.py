@@ -110,10 +110,12 @@ def search_job(request):
     the_id = os.environ.get('api_app_id')
     the_key = os.environ.get('api_key')
 
-    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&what={what}&where={where}&content-type=application/json")
+    response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=100&what={what}&where={where}&content-type=application/json")
 
     data = response.json()
     results = data["results"]
+    print("results:")
+    print(len(results))
 
     # get each job data in an array of objects
     jobs = []
@@ -127,6 +129,8 @@ def search_job(request):
         temp_obj["description"] = job["description"]
         jobs.append(temp_obj)
 
+    print("Jobs:")
+    print(len(jobs))
     # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
     p = Paginator(jobs, 6)
     page_num = request.GET.get("page", 1)

@@ -44,6 +44,10 @@ def login(request):
 
     return render(request, 'login.html')
 
+def logout(request):
+    request.session.clear()
+    return redirect('/')
+
 # handles the data from user login in login.html
 def log_user(request):
 

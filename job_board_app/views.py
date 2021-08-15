@@ -129,8 +129,6 @@ def search_job(request):
         temp_obj["description"] = job["description"]
         jobs.append(temp_obj)
 
-    print("Jobs:")
-    print(len(jobs))
     # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
     p = Paginator(jobs, 6)
     page_num = request.GET.get("page", 1)

@@ -36,7 +36,7 @@
         <div id="job-card">
           <p>{{ job.title | safe }}</p>
           <p>Company: {{ job.company }}</p>
-          <p>City: {{ job.location }}</p>
+          <p>Location: {{ job.location }}</p>
           <p>{{ job.description | safe }}</p>
           <form action="/set_job" method="post" type="post" enctype="multipart/form-data">
             {% csrf_token %}

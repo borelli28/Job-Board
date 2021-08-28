@@ -135,18 +135,33 @@ def search_job(request):
 
     # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
     p = Paginator(jobs, 6)
+    print("p:")
+    print(p)
     page_num = request.GET.get("page", 1)
+    print("page_num: ")
+    print(page_num)
     # this try block make sure if the user access a page that has not results then he will be redirect to page 1 instead of a server error
     try:
         page = p.page(page_num)
+        print("page: ")
+        print(page)
     except EmptyPage:
         page = p.page(1)
 
     # send alert if num of pages is 0
-    num_pages = len(page)
-    print("pages: " + str(num_pages))
+    # num_pages = len(page)
+    total_pages = p.num_pages
+    print("pages: " + str(total_pages))
 
-    return render(request, 'jobs.html', { "jobs": page, "num_pages": num_pages })
+    # creates an array with each page number in it [1, 2, 3, 4 , 5, 6]
+    page_nums = []
+    i = 1
+    while (i <= total_pages):
+        page_nums.append(i)
+        i+=1
+
+
+    return render(request, 'jobs.html', { "jobs": page, "page_nums": page_nums})
 
 # renders the tracker app page
 def tracker_app(request):

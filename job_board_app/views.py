@@ -149,19 +149,9 @@ def search_job(request):
         page = p.page(1)
 
     # send alert if num of pages is 0
-    # num_pages = len(page)
-    total_pages = p.num_pages
-    print("pages: " + str(total_pages))
+    num_pages = len(page)
 
-    # creates an array with each page number in it [1, 2, 3, 4 , 5, 6]
-    page_nums = []
-    i = 1
-    while (i <= total_pages):
-        page_nums.append(i)
-        i+=1
-
-
-    return render(request, 'jobs.html', { "jobs": page, "page_nums": page_nums})
+    return render(request, 'jobs.html', { "jobs": page, "page_range": p.page_range, "num_pages": num_pages})
 
 # renders the tracker app page
 def tracker_app(request):

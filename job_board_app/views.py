@@ -8,6 +8,8 @@ import dotenv
 import os
 from django.utils.html import strip_tags
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 def register(request):
 
@@ -78,11 +80,15 @@ def log_user(request):
 # render jobs page
 def jobs(request):
 
-    # if there are what and where are not empty then execute search_job method with this values
-    if ('what' in request.session) or ('where' in request.session):
-        return redirect('/search_job')
+    if 'userid' in request.session:
+
+        # if there are what and where are not empty then execute search_job method with this values
+        if ('what' in request.session) or ('where' in request.session):
+            return redirect('/search_job')
+        else:
+            return render(request, 'jobs.html')
     else:
-        return render(request, 'jobs.html')
+        return redirect('/')
 
 # makes API call for jobs and then re render the page with the response from the API
 def search_job(request):

@@ -127,11 +127,10 @@ def search_job(request):
         data = response.json()
         results = data["results"]
         print("results:")
-        print(len(results))
+        print(results)
 
         # get each job data in an array of objects
         jobs = []
-
         for job in results:
             temp_obj = {}
             temp_obj["title"] = job["title"]
@@ -170,9 +169,15 @@ def tracker_app(request):
     if 'userid' in request.session:
 
         user = User.objects.get(id=request.session['userid'])
+        print("username:")
+        print(user.username)
+        print("id:")
+        print(request.session['userid'])
 
         # get jobs viewed
         jobs = Jobs.objects.filter(user_jobs=user)
+        print("user jobs:")
+        print(len(jobs))
 
         viewed_jobs = []
 
@@ -182,7 +187,7 @@ def tracker_app(request):
                 viewed_jobs.append(job)
 
         # Only show jobs in the table that user apply to.
-        jobs = Jobs.objects.exclude(status="Viewed")
+        jobs = Jobs.objects.filter(user_jobs=user).exclude(status="Viewed")
 
         # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
         p = Paginator(viewed_jobs, 3)

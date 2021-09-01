@@ -141,7 +141,7 @@ def search_job(request):
             jobs.append(temp_obj)
 
         # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw
-        p = Paginator(jobs, 6)
+        p = Paginator(jobs, 9)
         print("p:")
         print(p)
         page_num = request.GET.get("page", 1)

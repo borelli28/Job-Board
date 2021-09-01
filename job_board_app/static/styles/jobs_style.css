@@ -35,6 +35,13 @@ main #search_job_form input {
   color: #1D3C8E;
 }
 
+main #search_job_form .btn-primary {
+  background-color: white;
+  color: #1D3C8E;
+  border: None;
+  margin-left: 1%;
+}
+
 main #jobs {
   display: flex;
   justify-content: space-around;

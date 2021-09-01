@@ -124,6 +124,15 @@ class TestViews(TestCase):
         self.assertEquals(response.url, "/search_job", "Method redirected to wrong URL")
 
     def test_search_job_view(self):
+        # test user permission
+        response = self.client.get(self.search_job_url)
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/", "Method did not redirect to login page when user is not logged in")
+
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
         response = self.client.get(self.search_job_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
         self.assertTemplateUsed(response, 'jobs.html', "Method render the wrong template")
@@ -153,8 +162,14 @@ class TestViews(TestCase):
         self.assertEquals(job.location, "Dallas, TX") # checks that the object posted is being saved
 
     def test_go_to_job_view(self):
+        # test user permission
+        response = self.client.get(self.go_to_job_url)
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/", "Method did not redirect to login page when user is not logged in")
+
         session = self.client.session
         session['url'] = "https://www.youtube.com/watch?v=hA_VxnxCHbo&list=PLbpAWbHbi5rMF2j5n6imm0enrSD9eQUaM&index=3"
+        session['userid'] = 1
         session.save()
 
         response = self.client.get(self.go_to_job_url)
@@ -186,6 +201,14 @@ class TestViews(TestCase):
 
     # render the edit_job_page          update_job_url
     def test_edit_job_view(self):
+        # test user permission
+        response = self.client.get(self.edit_job_url)
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/", "Method did not redirect to login page when user is not logged in")
+
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
 
         response = self.client.get(self.edit_job_url)
         self.assertEquals(response.status_code, 200, "Page is not rendering. It's supposed to return a 200 code")
@@ -284,6 +307,15 @@ class TestViews(TestCase):
         self.assertTrue(response.context['user_id'] == self.user.id, f"The id ({self.user.id}) of the User that render the form is not the same as the one in context({response.context['user_id']})")
 
     def test_add_job_view(self):
+        # test user permission
+        response = self.client.post(self.add_job_url)
+        self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
+        self.assertEquals(response.url, "/", "Method did not redirect to login page when user is not logged in")
+
+        session = self.client.session
+        session['userid'] = 1
+        session.save()
+
         # test that all attributes are being added correctly to the new job instance
         response = self.client.post(self.add_job_url, {
             "user_jobs": self.user.id,

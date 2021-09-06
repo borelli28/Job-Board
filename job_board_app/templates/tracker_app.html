@@ -86,7 +86,7 @@
           <p>Location: {{ job.location }}</p>
           <form action="/tracker_app/handle_viewed_job/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <span>Did you applied?</span>
+            <span>Do you want to add to table?</span>
             <label for="applied?">Yes</label>
             <input type="radio" name="applied?" value="yes"/>
             <label for="applied?">No</label>

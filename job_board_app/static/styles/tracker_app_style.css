@@ -1,6 +1,6 @@
-* {
+/* * {
   outline: 1px dashed red;
-}
+} */
 
 body {
   background-color: #979797;
@@ -37,6 +37,22 @@ main table tr {
 
 main table tr:hover {
   background-color: white;
+  color: #5523AA;
+}
+
+main table #actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main table #actions button:hover {
+  background-color: #5523AA;
+  color: white;
+}
+
+main table #actions form {
+  margin: 0 2%;
 }
 
 main #jobs-viewed {

@@ -55,14 +55,14 @@
             {% endif %}
             <td>{{ job.location }}</td>
             <td>{{ job.date_submitted }}</td>
-            <td>
+            <td id="actions">
               <form action="/tracker_app/edit_job/{{ job.id }}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <button>Edit</button>
+                <button class="btn btn-light">Edit</button>
               </form>
               <form action="/tracker_app/notes/{{ job.id }}">
                 {% csrf_token %}
-                <button>Notes</button>
+                <button class="btn btn-light">Notes</button>
               </form>
             </td>
           </tr>

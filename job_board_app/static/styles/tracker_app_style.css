@@ -29,6 +29,7 @@ main h3 {
 
 main table {
   background-color: #5523AA;
+  font-size: 1.2rem;
 }
 
 main table tr {
@@ -53,6 +54,11 @@ main table #actions button:hover {
 
 main table #actions form {
   margin: 0 2%;
+}
+
+main #add-job .btn-primary {
+  background-color: #5523AA;
+  border: 1px solid #5523AA;
 }
 
 main #jobs-viewed {

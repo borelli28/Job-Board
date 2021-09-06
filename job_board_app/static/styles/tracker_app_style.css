@@ -61,6 +61,10 @@ main #jobs-viewed {
   flex-wrap: wrap;
 }
 
+main #viewed-jobs-prompt {
+  color: #5523AA;
+}
+
 main #jobs-viewed h6 {
   width: 100%;
 }
@@ -69,6 +73,14 @@ main #jobs-viewed #job-card {
   width: 30%;
   margin: 1%;
   background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
+main #jobs-viewed #job-card .btn {
+  background-color: #5523AA;
+  color: white;
+  margin: 1%;
 }
 
 main #jobs-viewed #paginator {

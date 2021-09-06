@@ -86,12 +86,12 @@
           <p>Location: {{ job.location }}</p>
           <form action="/tracker_app/handle_viewed_job/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <span>Do you want to add to table?</span>
+            <span id="viewed-jobs-prompt">Do you want to add to table?</span>
             <label for="applied?">Yes</label>
             <input type="radio" name="applied?" value="yes"/>
             <label for="applied?">No</label>
             <input type="radio" name="applied?" value="no"/>
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn">Add</button>
           </form>
         </div>
         {% endfor %}

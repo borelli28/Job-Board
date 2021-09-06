@@ -67,6 +67,7 @@ main #viewed-jobs-prompt {
 
 main #jobs-viewed h6 {
   width: 100%;
+  margin: 3% 0 0 1%;
 }
 
 main #jobs-viewed #job-card {

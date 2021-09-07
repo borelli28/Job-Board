@@ -2,15 +2,27 @@
   outline: 1px dashed red;
 } */
 
-body nav {
+body {
+  background-color: #979797;
+}
+
+nav {
   display: flex;
   justify-content: space-around;
+  background-color: #5523AA;
+  padding: 0.5%;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
 }
 
 body #title {
   display: flex;
   justify-content: center;
   margin: 2%;
+  color: white;
 }
 
 body form {
@@ -21,9 +33,17 @@ body form {
 }
 
 body form textarea {
-  width: 80%;
+  width: 100%;
 }
 
-body form button {
-  width: 21%;
+body form .btn-light{
+  width: 25%;
+  background-color: #6A3CAA;
+  border: none;
+  color: white;
+  margin-top: 2%;
+}
+
+body form .btn-light:hover {
+  color: #6A3CAA;
 }

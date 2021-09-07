@@ -11,19 +11,19 @@
   <body>
 
     <nav>
-      <button class="btn btn-light"><a href="/jobs">Job Search</a></button>
-      <button class="btn btn-light"><a href="/tracker_app">Applications</a></button>
+      <button class="btn"><a href="/jobs">Job Search</a></button>
+      <button class="btn"><a href="/tracker_app">Applications</a></button>
       <button class="btn btn-danger"><a href="/logout">Logout</a></button>
     </nav>
 
     <div id="title">
-      <h1>{{ job.title }} - Notes</h1>
+      <h1>{{ job.title }} at {{ job.company }}</h1>
     </div>
 
     <form action="/tracker_app/notes/update/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
       {% csrf_token %}
       <textarea rows="20" cols="70" name="note">{{ job.note }}</textarea>
-      <button type="submit">Update Note</button>
+      <button type="submit" class="btn btn-light">Update Note</button>
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

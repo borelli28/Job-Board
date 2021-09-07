@@ -33,6 +33,7 @@ main #search_job_form {
 
 main #search_job_form input {
   color: #1D3C8E;
+  margin: 0 1%;
 }
 
 main #search_job_form .btn-primary {

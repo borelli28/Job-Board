@@ -2,9 +2,20 @@
   outline: 1px dashed red;
 } */
 
+body {
+  background-color: #979797;
+}
+
 nav {
   display: flex;
   justify-content: space-around;
+  background-color: #5523AA;
+  padding: 0.5%;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
 }
 
 main {
@@ -17,6 +28,7 @@ main {
 
 main h1 {
   width: 100%;
+  color: white;
 }
 
 main form {
@@ -32,8 +44,25 @@ main form div {
 
 main form div label {
   width: 30%;
+  font-size: 1.5rem;
 }
 
 main form div input, select {
   width: 50%;
+}
+
+main form select {
+  border-radius: 3px;
+}
+
+main #update-btn {
+  background-color: #6A3CAA;
+  border: #6A3CAA;
+  color: white;
+  margin: 1%;
+}
+
+main #delete-btn a {
+  text-decoration: none;
+  color: white;
 }

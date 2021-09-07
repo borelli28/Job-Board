@@ -10,14 +10,14 @@
   <body>
 
     <nav>
-      <button class="btn btn-light"><a href="/jobs">Job Search</a></button>
-      <button class="btn btn-light"><a href="/tracker_app">Applications</a></button>
+      <button class="btn"><a href="/jobs">Job Search</a></button>
+      <button class="btn"><a href="/tracker_app">Applications</a></button>
       <button class="btn btn-danger"><a href="/logout">Logout</a></button>
     </nav>
 
     <main>
 
-      <h1>Edit: {{ job.title }} at {{ job.company }}</h1>
+      <h1 >{{ job.title }} at {{ job.company }}</h1>
 
       <form action="/tracker_app/edit_job/update/{{ job.id }}" method="post" type="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -44,9 +44,9 @@
           <label for="location">Location</label>
           <input type="text" name="location" value="{{ job.location }}"/>
         </div>
-        <div>
-          <button type="submit">Update</button>
-          <button type="button"><a href="/tracker_app/edit_job/delete/{{ job.id }}">Delete Job</a></button>
+        <div id="actions">
+          <button type="submit" class="btn btn-light" id="update-btn">Update</button>
+          <button type="button"class="btn btn-danger" id="delete-btn"><a href="/tracker_app/edit_job/delete/{{ job.id }}">Delete Job</a></button>
         </div>
 
         <!-- <label for="date_submitted">Date Submitted</label>

@@ -3,6 +3,50 @@
 } */
 
 body {
+  background-color: #1D3C8E;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+main {
+  margin: 5%;
+}
+
+main #login h2, label {
+  color: white;
+}
+
+main #registration h2, label {
+  color: white;
+}
+
+main #login button {
+  color: #1D3C8E;
+}
+
+main #registration button {
+  color: #1D3C8E;
+}
+
+main #register-link {
+  width: 100%;
+  text-decoration: none;
+  color: #1D3C8E;
+}
+
+main #login-link {
+  width: 100%;
+  text-decoration: none;
+  color: #1D3C8E;
+}
+
+main #login h2, form, button {
+  margin: 2% 1%;
+}
+
+main #registration h2, form, button {
+  margin: 2% 1%;
 }

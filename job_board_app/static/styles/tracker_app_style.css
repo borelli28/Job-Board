@@ -61,6 +61,12 @@ main #add-job .btn-primary {
   border: 1px solid #5523AA;
 }
 
+main #add-job .btn-light {
+  background-color: #5523AA;
+  border: none;
+  color: white;
+}
+
 main #jobs-viewed {
   display: flex;
   justify-content: center;

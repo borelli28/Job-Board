@@ -1,11 +1,25 @@
+/* * {
+  outline: 1px dashed red;
+} */
 
 body {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   text-align: center;
+  background-color: #979797;
+  margin: 10% 0;
 }
 
-body a {
-  width: 100%;
-  margin: 1% 1%;
+form button {
+  margin: 0 5%;
+}
+
+form .btn-light {
+  color: #5523AA;
+}
+
+form .btn-light:hover {
+  background-color: #5523AA;
+  color: white;
 }

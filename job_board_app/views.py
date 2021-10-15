@@ -464,3 +464,6 @@ def add_job(request):
 
     else:
         return redirect('/')
+
+def delete_all_viewed_jobs(request):
+    pass

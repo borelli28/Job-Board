@@ -19,5 +19,6 @@ urlpatterns = [
     path('tracker_app/notes/<int:id>', views.job_note, name="render_job_note"),
     path('tracker_app/notes/update/<int:id>', views.update_note, name="update_job_note"),
     path('tracker_app/new_job_form', views.new_job, name="new_job_form"),
-    path('tracker_app/add_new_job', views.add_job, name="add_job")
+    path('tracker_app/add_new_job', views.add_job, name="add_job"),
+    path('tracker_app/delete_all_viewed_jobs', views.delete_all_viewed_jobs, name="delete_all_viewed_jobs")
 ]

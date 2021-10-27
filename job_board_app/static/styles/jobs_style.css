@@ -27,18 +27,17 @@ main #search_job_form {
   justify-content: center;
   margin: 2% 1%;
   background-color: #5523AA;
-  color: #1D3C8E;
   padding: 0.5%;
 }
 
 main #search_job_form input {
-  color: #1D3C8E;
+  color: #5523AA;
   margin: 0 1%;
 }
 
 main #search_job_form .btn-primary {
   background-color: white;
-  color: #1D3C8E;
+  color: #5523AA;
   border: None;
   margin-left: 1%;
 }

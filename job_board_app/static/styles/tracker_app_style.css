@@ -36,9 +36,9 @@ main table tr {
   color: white;
 }
 
-main table tr:hover {
-  background-color: white;
+main .table tr:hover {
   color: #5523AA;
+  background-color: white;
 }
 
 main table #actions {

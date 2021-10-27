@@ -122,22 +122,34 @@ def search_job(request):
         the_id = os.environ.get('api_app_id')
         the_key = os.environ.get('api_key')
 
-        response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=100&what={what}&where={where}&content-type=application/json")
+        parameters = {
+            "Host": "data.usajobs.gov",
+            "User-Agent": "N/A",
+            "Authorization-Key": the_key
+        }
 
+        # response = requests.get(f"http://api.adzuna.com:80/v1/api/jobs/us/search/1?app_id={the_id}&app_key={the_key}&results_per_page=100&what={what}&where={where}&content-type=application/json")
+        response = requests.get(url="https://data.usajobs.gov/api/Search?Keyword=engineer&ResultsPerPage=1", headers=parameters)
+        # print("API response:")
+        # print(response.json())
         data = response.json()
-        results = data["results"]
+        results = data["SearchResult"]["SearchResultItems"]
         print("results:")
         print(results)
 
         # get each job data in an array of objects
         jobs = []
         for job in results:
+            print("job:")
+            print(" ")
+            print(job)
+            print("___END OF JOB____")
             temp_obj = {}
-            temp_obj["title"] = job["title"]
-            temp_obj["company"] = job["company"]["display_name"]
-            temp_obj["location"] = job["location"]["display_name"]
-            temp_obj["url"] = job["redirect_url"]
-            temp_obj["description"] = job["description"]
+            temp_obj["title"] = job["MatchedObjectDescriptor"]["PositionTitle"]
+            temp_obj["company"] = job["MatchedObjectDescriptor"]["OrganizationName"]
+            temp_obj["location"] = job["MatchedObjectDescriptor"]["PositionLocationDisplay"]
+            temp_obj["url"] = job["MatchedObjectDescriptor"]["ApplyURI"]
+            temp_obj["description"] = job["MatchedObjectDescriptor"]["QualificationSummary"]
             jobs.append(temp_obj)
 
         # paginator code: https://www.youtube.com/watch?v=5FKL_voZuFw

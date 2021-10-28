@@ -39,7 +39,7 @@ def register_user(request):
 
         request.session['userid'] = user.id
 
-        return redirect('/jobs')
+        return redirect('/tracker_app')
 
 # renders the login page
 def login(request):
@@ -72,7 +72,7 @@ def log_user(request):
                 request.session['userid'] = logged_user.id
                 request.session['username'] = request.POST['username']
 
-                return redirect('/jobs')
+                return redirect('/tracker_app')
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
     return redirect('/')

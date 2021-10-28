@@ -57,7 +57,7 @@ class TestViews(TestCase):
             "confirm_password": "somepassword"
         })
         self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code") # redirect() returns a 302 code instead of a 200
-        self.assertEquals(response.url, "/jobs", "Method redirected to wrong URL")
+        self.assertEquals(response.url, "/tracker_app", "Method redirected to wrong URL")
         new_user = User.objects.last()
         self.assertEquals(new_user.username, "testusername1001012349", "Username passed in POST req is not the same being saved in the DB")
         self.assertNotEqual(new_user.password, "somepassword", "Literal user password is being saved in the DB(user password is not being hashed)") # checks that password is being hashed with bcrypt as we are not saving the literal password in the DB
@@ -89,7 +89,7 @@ class TestViews(TestCase):
             "password": "password"
         })
         self.assertEquals(response.status_code, 302, "Page did not redirect, it's supposed to return a 302 code")
-        self.assertEquals(response.url, "/jobs", "Method redirected to wrong URL")
+        self.assertEquals(response.url, "/tracker_app", "Method redirected to wrong URL")
 
         # test invalid post request
         response = self.client.post(self.log_user_url, {

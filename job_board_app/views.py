@@ -131,8 +131,8 @@ def search_job(request):
 
         data = response.json()
         results = data["SearchResult"]["SearchResultItems"]
-        print("results:")
-        print(results)
+        # print("results:")
+        # print(results)
 
         # get each job data in an array of objects
         jobs = []

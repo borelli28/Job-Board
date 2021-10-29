@@ -1,6 +1,6 @@
-/* * {
+* {
   outline: 1px dashed red;
-} */
+}
 
 body {
   background-color: #979797;
@@ -19,6 +19,9 @@ nav a {
 }
 
 main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   text-align: center;
 }
 
@@ -30,6 +33,8 @@ main h3 {
 main table {
   background-color: #5523AA;
   font-size: 1.2rem;
+  width: 80%;
+  margin: 1% 5%
 }
 
 main table tr {
@@ -54,6 +59,11 @@ main table #actions button:hover {
 
 main table #actions form {
   margin: 0 2%;
+}
+
+main #add-job {
+  width: 100%;
+  margin: 2% 0;
 }
 
 main #add-job .btn-primary {

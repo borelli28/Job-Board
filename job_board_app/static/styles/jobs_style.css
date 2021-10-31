@@ -68,6 +68,7 @@ main #job-card {
   color: #5523AA;
   margin-bottom: 1%;
   border-radius: 5px;
+  padding: 0.5%;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
@@ -75,6 +76,7 @@ main #job-card button {
   background-color: #6A3CAA;
   color: white;
   margin-bottom: 0.5%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 main #paginator {

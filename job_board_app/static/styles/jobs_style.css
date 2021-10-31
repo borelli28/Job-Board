@@ -35,6 +35,9 @@ main #search_job_form {
 main #search_job_form input {
   color: #5523AA;
   margin: 0 1%;
+  border: None;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 main #search_job_form .btn-primary {
@@ -42,6 +45,7 @@ main #search_job_form .btn-primary {
   color: #5523AA;
   border: None;
   margin-left: 1%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 main #jobs {

@@ -140,15 +140,45 @@ main #paginator a {
 }
 
 @media only screen and (max-width: 1280px) {
-  body {
-    background-color: black;
+  /* * {
+    outline: 1px dashed red;
+  } */
+
+  .hide {
+    display: None;
+  }
+
+  main h3 {
+    font-size: 300%;
   }
 
   main table {
-    font-size: 1.5rem;
+    font-size: 175%;
   }
-  /* hides date-submitted column to save space */
-  main table .date-col {
-    display: None;
+
+  main #add-job a {
+    font-size: 200%;
   }
+
+  main #jobs-viewed {
+    font-size: 175%;
+  }
+
+  main #jobs-viewed h6 {
+    font-size: 150%;
+  }
+
+  main #jobs-viewed #job-card {
+    width: 80%;
+  }
+
+  main #jobs-viewed #job-card form input[type='radio'] {
+    transform: scale(3);
+    margin: 0 5%;
+  }
+
+  main #jobs-viewed #job-card button {
+    font-size: 100%;
+  }
+
 }

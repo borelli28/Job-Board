@@ -27,7 +27,7 @@
             <th>Company</th>
             <th>Job URL</th>
             <th>Location</th>
-            <th class="date-col">Date Submitted</th>
+            <th class="hide">Date Submitted</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -54,7 +54,7 @@
               <td><a target="_blank" rel="noopener noreferrer">None Provided</a></td>
             {% endif %}
             <td>{{ job.location }}</td>
-            <td class="date-col">{{ job.date_submitted }}</td>
+            <td class="hide">{{ job.date_submitted }}</td>
             <td id="actions">
               <form action="/tracker_app/edit_job/{{ job.id }}" enctype="multipart/form-data">
                 {% csrf_token %}

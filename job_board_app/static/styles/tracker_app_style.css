@@ -124,8 +124,17 @@ main #jobs-viewed #paginator {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin: 2% 0;
 }
 
 main #jobs-viewed #paginator a {
   margin: 0 2% 1% 2%;
+}
+
+main #paginator a {
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: #5523AA;
+  padding: 0.5%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }

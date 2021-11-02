@@ -144,9 +144,6 @@ main #paginator a {
 }
 
 @media only screen and (max-width: 1280px) {
-  * {
-    outline: 1px dashed red;
-  }
 
   .hide {
     display: None;
@@ -165,6 +162,10 @@ main #paginator a {
 
   main table {
     font-size: 175%;
+  }
+
+  main table #actions {
+    display: block;
   }
 
   main #add-job a {

@@ -19,7 +19,7 @@ class ValidatorManager(models.Manager):
             errors["password"] = "Passwords do not match"
 
         if User.objects.filter(username=postData['username']):
-            errors["username"] = "Enter a different username"
+            errors["username"] = "Username is not valid. Please enter a valid username"
 
         return errors
 

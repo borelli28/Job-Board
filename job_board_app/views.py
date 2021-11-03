@@ -73,6 +73,8 @@ def log_user(request):
                 request.session['username'] = request.POST['username']
 
                 return redirect('/tracker_app')
+            else:
+                messages.error(request, "You enter the wrong username or password. Try again")
 
     # if we didn't find anything in the database by searching by username or if the passwords don't match,
     return redirect('/')

@@ -56,12 +56,13 @@ main #registration h2, form, button {
 
 @media only screen and (max-width: 1280px) {
 
-  body {
-    transform: scale(1);
-    outline: 2px dashed green;
+  main {
+    transform: scale(2);
+    font-size: 200%;
   }
 
-  main {
-    margin: 0;
+  main .messages {
+    font-size: 50%;
   }
+
 }

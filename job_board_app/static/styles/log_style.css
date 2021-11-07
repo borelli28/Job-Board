@@ -65,4 +65,8 @@ main #registration h2, form, button {
     font-size: 50%;
   }
 
+  main h2 {
+    font-size: 200%;
+  }
+
 }

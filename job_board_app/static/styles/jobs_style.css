@@ -124,6 +124,10 @@ main #paginator #page-nums a {
     width: 63%;
   }
 
+  main #search_job_form {
+    margin: 7% 1%;
+  }
+
   main #jobs #job-card {
     width: 80%;
   }

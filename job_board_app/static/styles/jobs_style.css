@@ -118,8 +118,9 @@ main #paginator #page-nums a {
     width: 80%;
   }
 
-  main #paginator #page-nums {
-
+  main #paginator {
+    display: flex;
+    justify-content: space-around;
   }
 
 }

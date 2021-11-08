@@ -57,7 +57,7 @@
       {% if jobs.has_next %}
         <a class="btn" href="{% url 'job_search_logic' %}?page={{ jobs.next_page_number }}">Next Page</a>
       {% endif %}
-        <div id="page-nums">
+        <div id="page-nums" class="hide">
         {% for num in page_range%}
           <a class="btn" href="/search_job?page={{ num }}">{{ num }}</a>
         {% endfor %}

@@ -110,8 +110,16 @@ main #paginator #page-nums a {
 
 @media only screen and (max-width: 1280px) {
 
+  .hide {
+    display: None;
+  }
+
   main #jobs #job-card {
     width: 80%;
+  }
+
+  main #paginator #page-nums {
+
   }
 
 }

@@ -71,6 +71,15 @@
         </tbody>
       </table>
 
+      <div id="table-paginator">
+      {% if user_jobs.has_previous %}
+        <a href="{% url 'render_tracker_app' %}?table_page={{ user_jobs.previous_page_number }}">Previous Page</a>
+      {% endif %}
+      {% if user_jobs.has_next %}
+        <a href="{% url 'render_tracker_app' %}?table_page={{ user_jobs.next_page_number }}">Next Page</a>
+      {% endif %}
+      </div>
+
       <div id="add-job">
         <a href="/tracker_app/new_job_form" class="btn btn-light">Add a Job</a>
       </div>

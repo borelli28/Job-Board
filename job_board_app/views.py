@@ -208,7 +208,7 @@ def tracker_app(request):
 
         # table paginator
         table_p = Paginator(jobs, 20)
-        table_page_num = request.GET.get("page", 1)
+        table_page_num = request.GET.get("table_page", 1)
         # this try block make sure if the user access a page that has not results then he will be redirect to page 1 instead of a server error
         try:
             table_page = table_p.page(table_page_num)

@@ -10,6 +10,7 @@ from django.utils.html import strip_tags
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+import bleach
 
 def register(request):
 
@@ -323,9 +324,9 @@ def update_job(request, id):
         # check that the job we are editing belongs to the logged user
         if job.user_jobs == user:
 
-            _status = request.POST['status']
-            _title = request.POST['title']
-            _company = request.POST['company']
+            _status = bleach.clean(request.POST['status'])
+            _title = bleach.clean(request.POST['title'])
+            _company = bleach.clean(request.POST['company'])
 
             # TODO: Add way to update location in the form(front end) and the logic here too
 
